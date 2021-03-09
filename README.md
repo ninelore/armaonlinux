@@ -83,4 +83,4 @@ Double Check for Software and Driver Updates aswell as the spelling of the Comma
 
 ## Epilogue
 
-This Guide was first released in the [Armaworld Forums]() by me. If you have Feedback or Questions dont hesitate to open a Issue.
+This Guide was first released in the [Armaworld Forums](https://armaworld.de/forum/thread/4992-ger-eng-arma-on-linux-ninelore-s-guide-acre-tfar-working/?postID=39909#post39909) by me. If you have Feedback or Questions dont hesitate to open a Issue.
