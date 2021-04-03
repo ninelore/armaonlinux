@@ -4,7 +4,7 @@
 # https://creativecommons.org/licenses/by-sa/4.0/ 
 # Thanks to: G4rrus#3755 (testing)
 
-# Version 1v13-1
+# Version 1v13-2
 
 ###########################################################################
 ## Adjust below!
@@ -12,11 +12,11 @@
 
 # Path to Arma's compatdata (wineprefix)
 # Leave default if Arma was installed in Steams default directory
-COMPAT_DATA_PATH="$HOME/home2/SteamLibrary/steamapps/compatdata/107410"
+STEAM_LIBRARY_PATH="$HOME/home2/SteamLibrary/steamapps/compatdata/107410"
 
 ## MAKE SURE THIS IS THE SAME AS THE PROTON VERSION OF ARMA IN STEAM!!!
 # Set this to the Proton Version u are using with Arma!
-PROTON_OFFICIAL_VER="5.13"
+PROTON_OFFICIAL_VER="6.3"
 # Set to true if you want to use custom proton in the compatibilitytoold.d folder
 USE_OWN_PROTONVERSION=false
 # Proton version (folder name in compatibilitytools.d)
@@ -83,6 +83,7 @@ if [[ $1 = "debug" ]]; then
 		echo "Proton: official $PROTON_OFFICIAL_VER"
 	else
 		echo "Proton: custon $PROTON_CUSTOM_VERSION"
+	fi
 	echo 
 	echo "Enviromentals:"
 	if [[ -n $STEAM_COMPAT_DATA_PATH ]]; then
