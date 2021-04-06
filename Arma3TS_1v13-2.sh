@@ -80,9 +80,9 @@ if [[ $1 = "debug" ]]; then
 	echo "sh -c \"$PROTONEXEC run $TSPATH\""
 	echo 
 	if [[ $USE_OWN_PROTONVERSION == true ]]; then
-		echo "Proton: official $PROTON_OFFICIAL_VER"
+		echo "Proton: custom $PROTON_OFFICIAL_VER"
 	else
-		echo "Proton: custon $PROTON_CUSTOM_VERSION"
+		echo "Proton: official $PROTON_CUSTOM_VERSION"
 	fi
 	echo 
 	echo "Enviromentals:"
