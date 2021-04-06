@@ -12,7 +12,7 @@
 
 # Path to Arma's compatdata (wineprefix)
 # Leave default if Arma was installed in Steams default directory
-COMPAT_DATA_PATH="$HOME/home2/SteamLibrary/steamapps/compatdata/107410"
+COMPAT_DATA_PATH="$HOME/.local/share/Steam/steamapps/compatdata/107410"
 
 ## MAKE SURE THIS IS THE SAME AS THE PROTON VERSION OF ARMA IN STEAM!!!
 # Set this to the Proton Version u are using with Arma!
