@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-# Licensed under CC BY-SA 4.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
-# https://creativecommons.org/licenses/by-sa/4.0/ 
-# Thanks to: G4rrus#3755 (testing)
+# Licensed under GNU GPL 2.0 4.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
+# Thanks to: G4rrus#3755 (testing) ; famfo#0227 (testing)
 
 # Version 1v14-1
 
