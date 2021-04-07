@@ -4,23 +4,27 @@
 # https://creativecommons.org/licenses/by-sa/4.0/ 
 # Thanks to: G4rrus#3755 (testing)
 
-# Version 1v13-2
+# Version 1v14-1
 
 ###########################################################################
 ## Adjust below!
 ###########################################################################
 
-# Path to Arma's compatdata (wineprefix)
+## Path to Arma's compatdata (wineprefix)
 # Leave default if Arma was installed in Steams default directory
 COMPAT_DATA_PATH="$HOME/.local/share/Steam/steamapps/compatdata/107410"
 
 ## MAKE SURE THIS IS THE SAME AS THE PROTON VERSION OF ARMA IN STEAM!!!
-# Set this to the Proton Version u are using with Arma!
+# Set this to the Proton Version you are using with Arma!
 PROTON_OFFICIAL_VER="6.3"
 # Set to true if you want to use custom proton in the compatibilitytoold.d folder
 USE_OWN_PROTONVERSION=false
 # Proton version (folder name in compatibilitytools.d)
 PROTON_CUSTOM_VERSION=""
+
+## Esync/Fsync
+# WARNING: Make sure that both Arma and Teamspeak either use or dont use Esync and Fsync!!!
+EFSYNC=false
 
 ###########################################################################
 ## DO NOT EDIT BELOW!
@@ -28,11 +32,13 @@ PROTON_CUSTOM_VERSION=""
 
 # Enviromentals
 export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH" 
-export PROTON_NO_ESYNC="1"
-export PROTON_NO_FSYNC="1"
+if [[ $ESYNC == false ]]; then
+	export PROTON_NO_ESYNC="1"
+	export PROTON_NO_FSYNC="1"
+fi
 export SteamAppId="107410"
 export SteamGameId="107410" 
-export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so"
+#export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so"
 
 # Help
 if [[ $1 == "help" ]]; then
@@ -51,7 +57,7 @@ fi
 
 # Executable paths
 if [[ $USE_OWN_PROTONVERSION == true ]]; then
-	PROTONEXEC="$HOME/.local/share/Steam/compatibilitytools.d/$PROTONVERSION/proton"
+	PROTONEXEC="$HOME/.local/share/Steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
 else
 	PROTONEXEC="$HOME/.local/share/Steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VER/proton"
 fi
@@ -61,6 +67,7 @@ TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program\ Files/TeamSpeak\ 3\ Client/ts3cli
 if [[ $1 == "install" ]]; then
 	echo "Trying to install Teamspeak with provided file"
 	echo "INSTALL TEAMSPEAK FOR ALL USERS AND LEAVE THE PATH DEFAULT!!!"
+	sleep 2
 	if [[ -z $2 ]]; then
 		echo "Error - no installer exe provided"
 	else
