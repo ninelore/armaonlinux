@@ -22,8 +22,9 @@ USE_OWN_PROTONVERSION=false
 PROTON_CUSTOM_VERSION=""
 
 ## Esync/Fsync
-# WARNING: Make sure that both Arma and Teamspeak either use or dont use Esync and Fsync!!!
-EFSYNC=false
+# WARNING: Make sure that both Arma and Teamspeak either use or dont use Esync and/or Fsync!!!
+ESYNC=false
+FSYNC=false
 
 ###########################################################################
 ## DO NOT EDIT BELOW!
@@ -31,12 +32,14 @@ EFSYNC=false
 
 # Enviromentals
 export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH" 
-if [[ $ESYNC == false ]]; then
-	export PROTON_NO_ESYNC="1"
-	export PROTON_NO_FSYNC="1"
-fi
 export SteamAppId="107410"
 export SteamGameId="107410" 
+if [[ $ESYNC == false ]]; then
+	export PROTON_NO_ESYNC="1"
+fi
+if [[ $FSYNC == false ]]; then 
+	export PROTON_NO_FSYNC="1"
+fi
 #export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so"
 
 # Help
