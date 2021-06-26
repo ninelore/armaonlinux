@@ -3,7 +3,7 @@
 # Licensed under GNU GPL 2.0 4.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
 # Thanks to: G4rrus#3755 (testing) ; famfo#0227 (testing)
 
-# Version 1v14-2
+# Version 1v14-3
 
 ###########################################################################
 ## Adjust below!
@@ -15,7 +15,7 @@ COMPAT_DATA_PATH="$HOME/.local/share/Steam/steamapps/compatdata/107410"
 
 ## MAKE SURE THIS IS THE SAME AS THE PROTON VERSION OF ARMA IN STEAM!!!
 # Set this to the Proton Version you are using with Arma!
-PROTON_OFFICIAL_VER="6.3"
+PROTON_OFFICIAL_VERSION="6.3"
 # Set to true if you want to use custom proton in the compatibilitytoold.d folder
 USE_OWN_PROTONVERSION=false
 # Proton version (folder name in compatibilitytools.d)
@@ -47,6 +47,7 @@ if [[ $1 == "help" ]]; then
 	echo "SCRIPT USAGE"
 	echo
 	echo "Dont forget to adjust settings by editing the script file!!"
+        echo -e "\e[31mBe shure to check ESync and FSync both in Arma and the script!\e[0m"
 	echo
 	echo "Start TS: ./Arma3TS.sh"
 	echo 
@@ -61,7 +62,7 @@ fi
 if [[ $USE_OWN_PROTONVERSION == true ]]; then
 	PROTONEXEC="$HOME/.local/share/Steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
 else
-	PROTONEXEC="$HOME/.local/share/Steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VER/proton"
+	PROTONEXEC="$HOME/.local/share/Steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
 fi
 TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program\ Files/TeamSpeak\ 3\ Client/ts3client_win64.exe"
 
@@ -79,7 +80,11 @@ fi
 
 # The command
 if [[ -z $@ ]]; then
-	sh -c "$PROTONEXEC run $TSPATH"
+        echo -e "\e[31mDon't forget to adjust the settings in the script!\e[0m \n"
+        echo "Esync: $ESYNC"
+        echo "Fsync: $FSYNC"
+        echo 
+        sh -c "$PROTONEXEC run $TSPATH"
 fi
 
 # Print debug information
@@ -89,19 +94,19 @@ if [[ $1 = "debug" ]]; then
 	echo "sh -c \"$PROTONEXEC run $TSPATH\""
 	echo 
 	if [[ $USE_OWN_PROTONVERSION == true ]]; then
-		echo "Proton: custom $PROTON_OFFICIAL_VER"
+		echo "Proton: custom $PROTON_CUSTOM_VERSION"
 	else
-		echo "Proton: official $PROTON_CUSTOM_VERSION"
+		echo "Proton: official Protn $PROTON_OFFICIAL_VERSION"
 	fi
 	echo 
-	echo "Enviromentals:"
 	if [[ -n $STEAM_COMPAT_DATA_PATH ]]; then
-		echo "Enviromentals were successfully set ($PROTON_NO_FSYNC)"
+		echo "Enviromentals were successfully set"
 		echo
 		echo "STEAM_COMPAT_DATA_PATH: $STEAM_COMPAT_DATA_PATH"
 		echo "SteamAppId/SteamGameId: $SteamAppId $SteamGameId"
 		echo "LD_PRELOAD: $LD_PRELOAD"
-		echo "PROTON_NO_ESYNC/PROTON_NO_FSYNC: $PROTON_NO_ESYNC/$PROTON_NO_FSYNC"
+		echo "ESync: $ESYNC"
+		echo "FSync: $FSYNC"
 	else 
 		echo "Enviromentals failed"
 	fi
