@@ -3,7 +3,7 @@
 # Licensed under GNU GPL 2.0 4.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
 # Thanks to: G4rrus#3755 (testing) ; famfo#0227 (testing)
 
-# Version 1v14-2
+# Version 1v14-4
 
 ###########################################################################
 ## Adjust below!
@@ -18,9 +18,9 @@ COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
 PROTON_OFFICIAL_VERSION="6.3"
 
 # Set to true if you have proton installed in a seperate steam library
-USE_DIFFERENT_STEAM_LIBRARY=true
+USE_DIFFERENT_STEAM_LIBRARY=false
 # Path to steam library
-STEAM_LIBRARY_PATH="/mnt/2TB_HDD/Launcher/Steam/steamapps/common"
+STEAM_LIBRARY_PATH=""
 
 # Set to true if you want to use custom proton in the compatibilitytoold.d folder
 USE_OWN_PROTONVERSION=false
