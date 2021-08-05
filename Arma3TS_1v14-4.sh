@@ -70,10 +70,10 @@ fi
 
 # Executable paths
 if [[ $USE_OWN_PROTONVERSION == true ]]; then
-	PROTONEXEC="/mnt/2TB_HDD/Launcher/Steam/steamapps/common/Proton\ 6.3/proton"
+	PROTONEXEC="$HOME/.local/share/Steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
     else
         if [[ $USE_DIFFERENT_STEAM_LIBRARY == true ]]; then
-	    PROTONEXEC="$STEAM_LIBRARY_PATH/Proton\ $PROTON_OFFICIAL_VERSION/proton"
+	    PROTONEXEC="$STEAM_LIBRARY_PATH/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
         else
 	    PROTONEXEC="$HOME/.local/share/Steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
     fi
