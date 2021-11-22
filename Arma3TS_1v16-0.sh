@@ -3,7 +3,7 @@
 # Licensed under GNU GPL 2.0 4.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
 # Thanks to: G4rrus#3755 (testing) ; famfo#0227 (testing)
 
-# Version 1v15-1
+# Version 1v16-1
 
 ###########################################################################
 ## Adjust below!
@@ -43,26 +43,27 @@ export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH"
 export STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/steam"
 export SteamAppId="107410"
 export SteamGameId="107410"
-
 if [[ $ESYNC == false ]]; then
 	export PROTON_NO_ESYNC="1"
 fi
 if [[ $FSYNC == false ]]; then
 	export PROTON_NO_FSYNC="1"
 fi
+
 if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" ]]; then
 	PROTON_OFFICIAL_VERSION="-\ Experimental"
 fi
 
-#export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so"
+TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program\ Files/TeamSpeak\ 3\ Client/ts3client_win64.exe"
+#export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so" ## deprecated and subject of removal
 
 # Help
 if [[ $1 == "help" ]]; then
 	echo "SCRIPT USAGE"
 	echo
 	echo "Dont forget to adjust settings by editing the script file!!"
-	echo -e "\e[31mBe shure to check ESync and FSync both in Arma and the script!\e[0m"
-	echo "Make shure that Arma and this script are using the same Proton version."
+	echo -e "\e[31mBe sure to check ESync and FSync both in Arma and the script!\e[0m"
+	echo "Make sure that Arma and this script are using the same Proton version."
 	echo
 	echo "Start TS: ./Arma3TS.sh"
 	echo
@@ -83,8 +84,6 @@ else
 		PROTONEXEC="$HOME/.local/share/Steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
 	fi
 fi
-
-TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program\ Files/TeamSpeak\ 3\ Client/ts3client_win64.exe"
 
 # Installer
 if [[ $1 == "install" ]]; then
