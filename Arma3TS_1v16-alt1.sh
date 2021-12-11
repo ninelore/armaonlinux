@@ -109,7 +109,7 @@ if [[ $1 = "debug" ]]; then
 	if [[ $USE_OWN_PROTONVERSION == true ]]; then
 		echo "Proton: custom $PROTON_CUSTOM_VERSION"
 	else
-		echo "Proton: official Protn $PROTON_OFFICIAL_VERSION"
+		echo "Proton: official $PROTON_OFFICIAL_VERSION"
 	fi
 	echo
 	if [[ -n $STEAM_COMPAT_DATA_PATH ]]; then
