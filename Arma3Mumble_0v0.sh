@@ -87,7 +87,6 @@ fi
 # Installer
 if [[ $1 == "install" ]]; then
     echo "Trying to install Mumble with provided file"
-    echo "INSTALL MUMBLE FOR ALL USERS AND LEAVE THE PATH DEFAULT!!!" # If applicable
     sleep 2
     if [[ -z $2 ]]; then
         echo "Error - no installer exe provided"
@@ -109,7 +108,7 @@ fi
 if [[ $1 = "debug" ]]; then
     echo "DEBUGGING INFORMATION"
     echo "Command Line:"
-    echo "sh -c \"$PROTONEXEC run $TSPATH\""
+    echo "sh -c \"$PROTONEXEC run $MUMBLEPATH\""
     echo
     if [[ $USE_OWN_PROTONVERSION == true ]]; then
         echo "Proton: custom $PROTON_CUSTOM_VERSION"
