@@ -1,4 +1,4 @@
-**Note: Do not use the alternative script unless you know what you are doing!**
+**Mumble Branch: WIP!!**
 
 # [Arma on Linux - Guide by 9L](https://ninelore.github.io/projects/#arma-on-linux)
 

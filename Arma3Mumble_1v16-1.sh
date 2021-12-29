@@ -54,8 +54,7 @@ if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" ]]; then
 	PROTON_OFFICIAL_VERSION="-\ Experimental"
 fi
 
-TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program\ Files/TeamSpeak\ 3\ Client/ts3client_win64.exe"
-#export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so" ## deprecated and subject of removal
+MUMBLEPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program\ Files/" # TBD!!
 
 # Help
 if [[ $1 == "help" ]]; then
@@ -65,13 +64,13 @@ if [[ $1 == "help" ]]; then
 	echo -e "\e[31mBe sure to check ESync and FSync both in Arma and the script!\e[0m"
 	echo "Make sure that Arma and this script are using the same Proton version."
 	echo
-	echo "Start TS: ./Arma3TS.sh"
+	echo "Start Mumble: ./Arma3Mumble.sh"
 	echo
-	echo "Install TS: ./Arma3TS.sh install [installer exe path]"
+	echo "Install Mumble: ./Arma3Mumble.sh install [installer exe path]"
 	echo
-	echo "Help: ./Arma3TS.sh help"
+	echo "Help: ./Arma3Mumble.sh help"
 	echo
-	echo "Debug Information: ./Arma3TS.sh debug"
+	echo "Debug Information: ./Arma3Mumble.sh debug"
 fi
 
 # Executable paths
@@ -88,7 +87,7 @@ fi
 # Installer
 if [[ $1 == "install" ]]; then
 	echo "Trying to install Teamspeak with provided file"
-	echo "INSTALL TEAMSPEAK FOR ALL USERS AND LEAVE THE PATH DEFAULT!!!"
+	echo "INSTALL MUMBLE FOR ALL USERS AND LEAVE THE PATH DEFAULT!!!" # If applicable
 	sleep 2
 	if [[ -z $2 ]]; then
 		echo "Error - no installer exe provided"
@@ -103,7 +102,7 @@ if [[ -z $@ ]]; then
 	echo "Esync: $ESYNC"
 	echo "Fsync: $FSYNC"
 	echo
-	sh -c "$PROTONEXEC run $TSPATH"
+	sh -c "$PROTONEXEC run $MUMBLEPATH"
 fi
 
 # Print debug information
