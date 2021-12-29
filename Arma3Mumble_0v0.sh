@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-# Licensed under GNU GPL 2.0 4.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
-# Thanks to: G4rrus#3755 (testing) ; famfo#0227 (testing)
-
-# Version 1v16-1
+# Licensed under GNU GPL 2.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
+# 
+# Contributing:	famfo (famfo#0227)
+# Testing:		G4rrus#3755 
+# 
+# Version 1v1-2
 
 ###########################################################################
 ## Adjust below!
@@ -11,18 +13,18 @@
 
 ## Path to Arma's compatdata (wineprefix)
 # Leave default if Arma was installed in Steams default directory
-COMPAT_DATA_PATH="/mnt/2TB_HDD/Launcher/Steam/steamapps/compatdata/107410"
+COMPAT_DATA_PATH="$HOME/.steam/steamapps/compatdata/107410"
 
 ## MAKE SURE THIS IS THE SAME AS THE PROTON VERSION OF ARMA IN STEAM!!!
 # Set this to the Proton Version you are using with Arma!
 # Available versions:
 # Proton Experimental, 6.3, 5.13, 5.0, 4.11, 4.2, 3.16, 3.7
-PROTON_OFFICIAL_VERSION="Proton Experimental"
+PROTON_OFFICIAL_VERSION="6.3"
 
 # Set to true if you have proton installed in a seperate steam library
-USE_DIFFERENT_STEAM_LIBRARY=true
+USE_DIFFERENT_STEAM_LIBRARY=false
 # Path to steam library (steamapps folder)
-STEAM_LIBRARY_PATH="/mnt/1TB_HDD/Launcher/Steam2/steamapps"
+STEAM_LIBRARY_PATH=""
 
 # Set to true if you want to use custom proton in the compatibilitytoold.d folder
 USE_OWN_PROTONVERSION=false
