@@ -5,7 +5,7 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v16-1
+# Version 1v16-2
 
 ###########################################################################
 ## Adjust below!
@@ -19,7 +19,7 @@ COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
 # Set this to the Proton Version you are using with Arma!
 # Available versions:
 # Proton Experimental, 6.3, 5.13, 5.0, 4.11, 4.2, 3.16, 3.7
-PROTON_OFFICIAL_VERSION="Proton Experimental"
+PROTON_OFFICIAL_VERSION="6.3"
 
 # Set to true if you have proton installed in a seperate steam library
 USE_DIFFERENT_STEAM_LIBRARY=false
