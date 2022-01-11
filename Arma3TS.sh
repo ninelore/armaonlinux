@@ -111,6 +111,12 @@ elif [[ $1 = "debug" ]]; then
 	else
 		echo "Enviromentals failed"
 	fi
+# Winetricks wrapper for Arma's compatdata
+elif [[ $1 = "winetricks" ]]; then
+	echo "Executing winetricks inside Arma's compatdata prefix..."
+	echo "Winetricks Arguments: ${@:2}"
+	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
+	winetricks ${@:2}
 # Print usage if argument are invalid
 else
 	echo "SCRIPT USAGE"
