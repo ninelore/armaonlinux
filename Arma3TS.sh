@@ -5,7 +5,7 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v16-2
+# Version 1v16-3a
 
 ###########################################################################
 ## Adjust below!
@@ -78,12 +78,12 @@ fi
 
 # Executable paths
 if [[ $USE_OWN_PROTONVERSION == true ]]; then
-	PROTONEXEC="$HOME/.local/share/Steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
+	PROTONEXEC="$HOME/.steam/steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
 else
 	if [[ $USE_DIFFERENT_STEAM_LIBRARY == true ]]; then
 		PROTONEXEC="$STEAM_LIBRARY_PATH/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
 	else
-		PROTONEXEC="$HOME/.local/share/Steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
+		PROTONEXEC="$HOME/.steam/steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
 	fi
 fi
 
