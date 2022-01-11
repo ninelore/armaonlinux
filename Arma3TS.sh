@@ -114,9 +114,14 @@ elif [[ $1 = "debug" ]]; then
 # Winetricks wrapper for Arma's compatdata
 elif [[ $1 = "winetricks" ]]; then
 	echo "Executing winetricks inside Arma's compatdata prefix..."
-	echo "Winetricks Arguments: ${@:2}"
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
-	winetricks ${@:2}
+	if [[ $2 = "Arma" ]]; then
+		echo "Installing recommended features/DLLs for Arma"
+		winetricks d3dcompiler_43 d3dx10_43 d3dx11_43 mfc140 xact_x64
+	else
+		echo "Winetricks Arguments: ${@:2}"
+		winetricks ${@:2}
+	fi
 # Print usage if argument are invalid
 else
 	echo "SCRIPT USAGE"
@@ -125,9 +130,13 @@ else
 	echo -e "\e[31mEspecially check that Esync and Fsync match with Arma!\e[0m"
 	echo -e "\e[31mAlso check that you use the right Proton version!\e[0m"
 	echo
-	echo "Start TS: ./Arma3TS.sh"
+	echo "./Arma3TS.sh										- start Teamspeak"
 	echo
-	echo "Install TS: ./Arma3TS.sh install [installer exe path]"
+	echo "./Arma3TS.sh install [installer exe path]			- install Teamspeak"
+	echo
+	echo "./Arma3TS.sh winetricks [winetricks arguments]	- Run a winetricks command inside the Arma prefix"
+	echo
+	echo "./Arma3TS.sh winetricks Arma						- Install recommended FEatures/DLLs for Arma via winetricks [As per Guide Chapter 5.1]"
 	echo
 	echo "Debug Information: ./Arma3TS.sh debug"
 fi
