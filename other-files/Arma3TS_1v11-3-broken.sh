@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-# Licensed under CC BY-SA 4.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
-# https://creativecommons.org/licenses/by-sa/4.0/ 
+# Licensed under GNU GPL 2.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
 # Thanks to: G4rrus#3755 (testing)
 
-# Version 1v10-6
+# Version 1v11-3
 
 ###########################################################################
 ## Adjust below!
@@ -14,7 +13,7 @@
 # Leave default if Arma was installed in Steams default directory
 COMPAT_DATA_PATH="$HOME/.local/share/Steam/steamapps/compatdata/107410"
 # Proton version (folder name in compatibilitytools.d)
-PROTONVERSION="proton-6.0-1.arma-9l"
+PROTONVERSION="proton_tkg_6.2.r0.g3b5ea332.arma-9l"
 
 ###########################################################################
 ## DO NOT EDIT BELOW!
@@ -23,6 +22,7 @@ PROTONVERSION="proton-6.0-1.arma-9l"
 # Enviromentals
 export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH" 
 export PROTON_NO_ESYNC=1
+export PROTON_NO_FSYNC=1
 export SteamAppId="107410"
 export SteamGameId="107410" 
 export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so"
@@ -73,11 +73,7 @@ if [[ $1 = "debug" ]]; then
 		echo "STEAM_COMPAT_DATA_PATH: $STEAM_COMPAT_DATA_PATH"
 		echo "SteamAppId/SteamGameId: $SteamAppId $SteamGameId"
 		echo "LD_PRELOAD: $LD_PRELOAD"
-		if [[ $PROTON_NO_ESYNC == 1 ]]; then
-			echo "PROTON_NO_ESYNC: true"
-		else
-			echo "PROTON_NO_ESYNC: missing"
-		fi
+		echo "PROTON_NO_ESYNC/PROTON_NO_FSYNC: $PROTON_NO_ESYNC/$PROTON_NO_FSYNC"
 	else 
 		echo "Enviromentals failed"
 	fi
