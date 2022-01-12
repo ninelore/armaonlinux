@@ -5,8 +5,8 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v17-2
-_SCRIPTVER="1v17-2"
+# Version 1v17-3
+_SCRIPTVER="1v17-3"
 
 ###########################################################################
 ## Adjust below!
@@ -118,11 +118,16 @@ elif [[ $1 = "winetricks" ]]; then
 	if [[ $2 = "Arma" ]]; then
 		echo "Installing recommended features/DLLs for Arma"
 		winetricks d3dcompiler_43 d3dx10_43 d3dx11_43 mfc140 xact_x64
+		echo "done"
 	else
 		echo "Winetricks Arguments: ${@:2}"
 		winetricks ${@:2}
 	fi
-# Print usage if argument are invalid
+elif [[ $1 = "winecfg" ]]; then
+	echo "Starting winecfg for Arma's compatdata..."
+	echo
+	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
+	winetricks winecfg
 else
 	echo "SCRIPT USAGE"
 	echo
