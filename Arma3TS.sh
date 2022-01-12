@@ -136,9 +136,9 @@ else
 	echo
 	echo "./Arma3TS.sh winetricks [winetricks arguments]	- Run a winetricks command inside the Arma prefix"
 	echo
-	echo "./Arma3TS.sh winetricks Arma						- Install recommended FEatures/DLLs for Arma via winetricks [As per Guide Chapter 5.1]"
+	echo "./Arma3TS.sh winetricks Arma						- Install recommended Features/DLLs for Arma via winetricks [As per Guide Chapter 5.1]"
 	echo
-	echo "Debug Information: ./Arma3TS.sh debug"
+	echo "./Arma3TS.sh debug								- Print Debugging Information"
 fi
 
 ## End of File
