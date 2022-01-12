@@ -5,8 +5,8 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v17-1
-_SCRIPTVER="1v17-1"
+# Version 1v17-2
+_SCRIPTVER="1v17-2"
 
 ###########################################################################
 ## Adjust below!
@@ -130,15 +130,15 @@ else
 	echo -e "\e[31mEspecially check that Esync and Fsync match with Arma!\e[0m"
 	echo -e "\e[31mAlso check that you use the right Proton version!\e[0m"
 	echo
-	echo "./Arma3TS.sh										- start Teamspeak"
+	echo "./Arma3Helper.sh										- start Teamspeak"
 	echo
-	echo "./Arma3TS.sh install [installer exe path]			- install Teamspeak"
+	echo "./Arma3Helper.sh install [installer exe path]			- install Teamspeak"
 	echo
-	echo "./Arma3TS.sh winetricks [winetricks arguments]	- Run a winetricks command inside the Arma prefix"
+	echo "./Arma3Helper.sh winetricks [winetricks arguments]	- Run a winetricks command inside the Arma prefix"
 	echo
-	echo "./Arma3TS.sh winetricks Arma						- Install recommended Features/DLLs for Arma via winetricks [As per Guide Chapter 5.1]"
+	echo "./Arma3Helper.sh winetricks Arma						- Install recommended Features/DLLs for Arma via winetricks [As per Guide Chapter 5.1]"
 	echo
-	echo "./Arma3TS.sh debug								- Print Debugging Information"
+	echo "./Arma3Helper.sh debug								- Print Debugging Information"
 fi
 
 ## End of File
