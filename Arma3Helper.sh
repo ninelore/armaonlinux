@@ -5,8 +5,8 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v17-3
-_SCRIPTVER="1v17-3"
+# Version 1v17-4
+_SCRIPTVER="1v17-4"
 
 ###########################################################################
 ## Adjust below!
@@ -19,8 +19,8 @@ COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
 ## MAKE SURE THIS IS THE SAME AS THE PROTON VERSION OF ARMA IN STEAM!!!
 # Set this to the Proton Version you are using with Arma!
 # Available versions:
-# Proton Experimental, 6.3, 5.13, 5.0, 4.11, 4.2, 3.16, 3.7
-PROTON_OFFICIAL_VERSION="6.3"
+# Proton Experimental, 7.0, 6.3, 5.13, 5.0, 4.11, 4.2, 3.16, 3.7
+PROTON_OFFICIAL_VERSION="7.0"
 
 # Set to true if you have proton installed in a seperate steam library
 USE_DIFFERENT_STEAM_LIBRARY=false
@@ -57,7 +57,7 @@ if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" ]]; then
 	PROTON_OFFICIAL_VERSION="-\ Experimental"
 fi
 
-TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program\ Files/TeamSpeak\ 3\ Client/ts3client_win64.exe"
+TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program Files/TeamSpeak 3 Client/ts3client_win64.exe"
 #export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so" ## deprecated and subject of removal
 
 # Executable paths
@@ -73,9 +73,15 @@ fi
 
 # Start
 if [[ -z $@ ]]; then
+    ERR="$(ls "$TSPATH" 2> /dev/null)"
+    if [[ ${#ERR} == 0 ]]; then
+        echo -e "\e[31mError\e[0m: TeamSpeak is not installed!"
+        exit 1
+    fi
+
 	echo -e "\e[31mDon't forget to adjust the settings in the script!\e[0m \n"
 	echo
-	sh -c "$PROTONEXEC run $TSPATH"
+	sh -c "$PROTONEXEC run '$TSPATH'"
 # TS installer
 elif [[ $1 == "install" ]]; then 
 	echo "Trying to install Teamspeak with provided file"
