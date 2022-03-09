@@ -73,12 +73,12 @@ fi
 
 # Start
 if [[ -z $@ ]]; then
+	# Check if TS is installed
     ERR="$(ls "$TSPATH" 2> /dev/null)"
     if [[ ${#ERR} == 0 ]]; then
         echo -e "\e[31mError\e[0m: TeamSpeak is not installed!"
         exit 1
     fi
-
 	echo -e "\e[31mDon't forget to adjust the settings in the script!\e[0m \n"
 	echo
 	sh -c "$PROTONEXEC run '$TSPATH'"
