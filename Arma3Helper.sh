@@ -9,7 +9,7 @@
 _SCRIPTVER="1v18-1"
 
 #####################################################################################
-## Adjust below or use the ~/.arma3helper config file							   ##
+## Adjust below or use the ~/.arma3helper config file
 #####################################################################################
 
 ## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!

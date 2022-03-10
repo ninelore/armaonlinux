@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #####################################################################################
-## Arma3helper.sh CONFIG FILE (This will override settings made in Arma3Helper.sh) ##
+## Arma3helper.sh CONFIG FILE (This will override settings made in Arma3Helper.sh) 
 #####################################################################################
 
 ## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!
