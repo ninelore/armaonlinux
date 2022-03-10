@@ -50,7 +50,7 @@ if [[ $1 == "install" ]]; then
 fi
 
 # The Command
-if [[ -z $@ ]]; then
+if [[ -z $* ]]; then
 	sh -c "$PROTONEXEC run $TSPATH"
 fi
 if [[ $1 = "debug" ]]; then

@@ -94,7 +94,7 @@ if [[ $1 == "install" ]]; then
 fi
 
 # The command
-if [[ -z $@ ]]; then
+if [[ -z $* ]]; then
         echo -e "\e[31mDon't forget to adjust the settings in the script!\e[0m \n"
         echo "Esync: $ESYNC"
         echo "Fsync: $FSYNC"
