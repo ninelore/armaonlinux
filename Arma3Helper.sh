@@ -18,14 +18,15 @@ _SCRIPTVER="1v18-1"
 PROTON_OFFICIAL_VERSION="7.0"
 
 ## Path to Arma's compatdata (wineprefix)
-# Leave empty if Arma is installed in Steams default directory
+# Leave empty if Arma is installed in Steams default library
 COMPAT_DATA_PATH=""
 
 # If you have proton in a different steam library, then put the path to its steamapps folder here
-# Leave empty 
+# Leave empty if Proton is installed in Steams default library
 STEAM_LIBRARY_PATH=""
 
 # If you are using a custom proton build, then put its folder name (from inside compatibilitytools.d) here
+# Leave empty if proton 
 PROTON_CUSTOM_VERSION=""
 
 ## Esync/Fsync
@@ -43,6 +44,14 @@ if [[ -e "$HOME/.arma3helper" ]]; then
 	echo "Config file .arma3helper found. Using its values."
 	source $HOME/.arma3helper
 fi
+
+# Installed check ($1 = path; $2 = name in error msg)
+_checkinstall() {
+	if [[ ! -x "$1" ]]; then
+		echo -e "\e[31mError\e[0m: $2 is not installed!"
+        exit 1
+	fi
+}
 
 # Enviromentals
 if [[ -z "$COMPAT_DATA_PATH" ]]
@@ -80,10 +89,7 @@ fi
 # Start
 if [[ -z $* ]]; then
 	# Check if TS is installed
-    if [[ ! -e "$TSPATH" ]]; then
-        echo -e "\e[31mError\e[0m: TeamSpeak is not installed!"
-        exit 1
-    fi
+    _checkinstall "$TSPATH" "TeamSpeak"
 	echo -e "\e[31mDon't forget to adjust the settings in the script!\e[0m \n"
 	echo
 	sh -c "$PROTONEXEC run '$TSPATH'"
@@ -107,7 +113,7 @@ elif [[ $1 = "debug" ]]; then
 	echo "Command Line:"
 	echo "sh -c \"$PROTONEXEC run $TSPATH\""
 	echo
-	if [[-n "$PROTON_CUSTOM_VERSION" ]]; then
+	if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 		echo "Proton: custom $PROTON_CUSTOM_VERSION"
 	else
 		echo "Proton: official $PROTON_OFFICIAL_VERSION"
@@ -126,6 +132,7 @@ elif [[ $1 = "debug" ]]; then
 # Winetricks wrapper for Arma's compatdata
 elif [[ $1 = "winetricks" ]]; then
 	echo "Executing winetricks inside Arma's compatdata prefix..."
+	_checkinstall "/usr/bin/winetricks" "windtricks"
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
 	if [[ $2 = "Arma" ]]; then
 		echo "Installing recommended features/DLLs for Arma"
@@ -136,8 +143,8 @@ elif [[ $1 = "winetricks" ]]; then
 		winetricks "${*:2}"
 	fi
 elif [[ $1 = "winecfg" ]]; then
-	echo "Starting winecfg for Arma's compatdata..."
-	echo
+	echo "Starting winecfg via winetricks for Arma's compatdata..."
+	_checkinstall "/usr/bin/winetricks" "winetricks"
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
 	winetricks winecfg
 else
@@ -157,5 +164,3 @@ else
 	echo
 	echo "./Arma3Helper.sh debug								- Print Debugging Information"
 fi
-
-## End of File
