@@ -67,13 +67,10 @@ fi
 if [[ $FSYNC == false ]]; then
 	export PROTON_NO_FSYNC="1"
 fi
-
 if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" ]]; then
 	PROTON_OFFICIAL_VERSION="-\ Experimental"
 fi
-
 TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program Files/TeamSpeak 3 Client/ts3client_win64.exe"
-#export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so" ## deprecated and subject of removal
 
 # Executable paths
 if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
@@ -95,7 +92,7 @@ if [[ -z $* ]]; then
 # TS installer
 elif [[ $1 == "install" ]]; then 
 	echo "Trying to install Teamspeak with provided file"
-	echo "\e[31mINSTALL TEAMSPEAK FOR ALL USERS AND LEAVE THE PATH DEFAULT!!!\e[0m \n"
+	echo -e "\e[31mINSTALL TEAMSPEAK FOR ALL USERS AND LEAVE THE PATH DEFAULT!!!\e[0m \n"
 	sleep 2
 	if [[ -z $2 ]]; then
 		echo "Error - no installer exe provided"
@@ -107,6 +104,11 @@ elif [[ $1 = "debug" ]]; then
 	echo "DEBUGGING INFORMATION"
 	echo
 	echo "Script Version: $_SCRIPTVER"
+	_UPVER=$(curl -s https://raw.githubusercontent.com/ninelore/armaonlinux/master/version)
+	if [[ $_SCRIPTVER != $_UPVER ]]; then
+		echo -e "\e[31mScript Version $_UPVER is available!\e[0m"
+		echo "https://github.com/ninelore/armaonlinux"
+	fi
 	echo
 	echo "Command Line:"
 	echo "sh -c \"$PROTONEXEC run $TSPATH\""
@@ -117,7 +119,7 @@ elif [[ $1 = "debug" ]]; then
 		echo "Proton: official $PROTON_OFFICIAL_VERSION"
 	fi
 	echo
-	echo "Enviromentals"
+	echo "Enviromental Variables"
 	echo "STEAM_COMPAT_DATA_PATH: $STEAM_COMPAT_DATA_PATH"
 	echo "SteamAppId/SteamGameId: $SteamAppId $SteamGameId"
 	echo "ESync: $ESYNC"
@@ -140,16 +142,26 @@ elif [[ $1 = "winecfg" ]]; then
 	_checkinstall "/usr/bin/winetricks" "winetricks"
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
 	winetricks winecfg
+# Updater
+elif [[ $1 = "update" ]]; then
+	echo -e "\e[31mUpdating the script will reset your changes in the script options!\e[0m"
+	echo "However, it will not reset your settings in ~/.arma3helper."
+	read -p "Are you sure you want to update? (y/n) " -n 1 -r
+	echo 
+	if [[ ! $REPLY =~ ^[Yy]$ ]]
+	then
+    	exit 1
+	fi
+	curl -o "$0" https://raw.githubusercontent.com/ninelore/armaonlinux/master/Arma3Helper.sh
+	echo "The Script was updated!"
 else
 	echo "SCRIPT USAGE"
 	echo
-	echo -e "\e[31mDont forget to adjust settings by editing the script file!\e[0m"
-	echo -e "\e[31mEspecially check that Esync and Fsync match with Arma!\e[0m"
-	echo -e "\e[31mAlso check that you use the right Proton version!\e[0m"
+	echo -e "\e[31mDouble check the script settings at the top before reporting any problems!\e[0m"
 	echo
 	echo "./Arma3Helper.sh                                      - Start Teamspeak"
 	echo
-	echo "./Arma3Helper.sh install [installer exe path]         - Install Teamspeak"
+	echo "./Arma3Helper.sgh install [installer exe path]        - Install Teamspeak"
 	echo
 	echo "./Arma3Helper.sh winetricks [winetricks arguments]    - Run a winetricks command inside the Arma prefix"
 	echo
@@ -158,4 +170,6 @@ else
 	echo "./Arma3Helper.sh winecfg                              - Run winecfg for the Arma prefix"
 	echo
 	echo "./Arma3Helper.sh debug                                - Print Debugging Information"
+	echo 
+	echo "./Arma3Helper.sh update                               - Update the script from github master"
 fi
