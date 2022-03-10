@@ -72,7 +72,7 @@ else
 fi
 
 # Start
-if [[ -z $@ ]]; then
+if [[ -z $* ]]; then
 	# Check if TS is installed
     ERR="$(ls "$TSPATH" 2> /dev/null)"
     if [[ ${#ERR} == 0 ]]; then
@@ -126,8 +126,8 @@ elif [[ $1 = "winetricks" ]]; then
 		winetricks d3dcompiler_43 d3dx10_43 d3dx11_43 mfc140 xact_x64
 		echo "done"
 	else
-		echo "Winetricks Arguments: ${@:2}"
-		winetricks ${@:2}
+		echo "Winetricks Arguments: ${*:2}"
+		winetricks "${*:2}"
 	fi
 elif [[ $1 = "winecfg" ]]; then
 	echo "Starting winecfg for Arma's compatdata..."

@@ -41,7 +41,7 @@ if [[ $1 == "install" ]]; then
 	if [[ -z $2 ]]; then
 		echo "Error - no installer exe provided"
 	fi
-	$PROTONEXEC run $2
+	$PROTONEXEC run "$2"
 fi
 
 # Executable Paths
@@ -49,7 +49,7 @@ PROTONEXEC="$HOME/.local/share/Steam/compatibilitytools.d/$PROTONVERSION/proton"
 TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program\ Files/TeamSpeak\ 3\ Client/ts3client_win64.exe"
 
 # The Command
-if [[ -z $@ ]]; then
+if [[ -z $* ]]; then
 	sh -c "$PROTONEXEC run $TSPATH"
 fi
 if [[ $1 = "debug" ]]; then
