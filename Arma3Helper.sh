@@ -1,39 +1,36 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 
 # Licensed under GNU GPL 2.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
 # 
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v17-4
-_SCRIPTVER="1v17-4"
+# Version 1v18-1
+_SCRIPTVER="1v18-1"
 
 ###########################################################################
 ## Adjust below!
 ###########################################################################
 
-## Path to Arma's compatdata (wineprefix)
-# Leave default if Arma was installed in Steams default directory
-COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
-
-## MAKE SURE THIS IS THE SAME AS THE PROTON VERSION OF ARMA IN STEAM!!!
+## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!
 # Set this to the Proton Version you are using with Arma!
-# Available versions:
-# Proton Experimental, 7.0, 6.3, 5.13, 5.0, 4.11, 4.2, 3.16, 3.7
+# Available versions: "Proton Experimental", "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7"
 PROTON_OFFICIAL_VERSION="7.0"
 
-# Set to true if you have proton installed in a seperate steam library
-USE_DIFFERENT_STEAM_LIBRARY=false
-# Path to steam library (steamapps folder)
+## Path to Arma's compatdata (wineprefix)
+# Leave empty if Arma is installed in Steams default directory
+COMPAT_DATA_PATH=""
+
+# If you have proton in a different steam library, then put the path to its steamapps folder here
+# Leave empty 
 STEAM_LIBRARY_PATH=""
 
-# Set to true if you want to use custom proton in the compatibilitytoold.d folder
-USE_OWN_PROTONVERSION=false
-# Proton version (folder name in compatibilitytools.d)
+# If you are using a custom proton build, then put its folder name (from inside compatibilitytools.d) here
 PROTON_CUSTOM_VERSION=""
 
 ## Esync/Fsync
-# WARNING: Make sure that both Arma and Teamspeak either use or dont use Esync and/or Fsync!!!
+# IMPORTANT: Make sure that Esync and Fsync settings MATCH for both Arma and TeamSpeak(here)
+# If you havent explicitly turned it off for Arma, leave it on here!
 ESYNC=true
 FSYNC=true
 
@@ -41,7 +38,16 @@ FSYNC=true
 ## DO NOT EDIT BELOW!
 ###########################################################################
 
+# Read settings from .arma3helper if it exists
+if [[ -e "$HOME/.arma3helper" ]]; then
+	echo "Config file .arma3helper found. Using its values."
+	source $HOME/.arma3helper
+fi
+
 # Enviromentals
+if [[ -z "$COMPAT_DATA_PATH" ]]
+	COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
+fi
 export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH"
 export STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/steam"
 export SteamAppId="107410"
@@ -61,10 +67,10 @@ TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program Files/TeamSpeak 3 Client/ts3client
 #export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so" ## deprecated and subject of removal
 
 # Executable paths
-if [[ $USE_OWN_PROTONVERSION == true ]]; then
+if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 	PROTONEXEC="$HOME/.steam/steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
 else
-	if [[ $USE_DIFFERENT_STEAM_LIBRARY == true ]]; then
+	if [[ -n "$STEAM_LIBRARY_PATH" ]]; then
 		PROTONEXEC="$STEAM_LIBRARY_PATH/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
 	else
 		PROTONEXEC="$HOME/.steam/steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
@@ -74,8 +80,7 @@ fi
 # Start
 if [[ -z $* ]]; then
 	# Check if TS is installed
-    ERR="$(ls "$TSPATH" 2> /dev/null)"
-    if [[ ${#ERR} == 0 ]]; then
+    if [[ ! -e "$TSPATH" ]]; then
         echo -e "\e[31mError\e[0m: TeamSpeak is not installed!"
         exit 1
     fi
@@ -89,6 +94,7 @@ elif [[ $1 == "install" ]]; then
 	sleep 2
 	if [[ -z $2 ]]; then
 		echo "Error - no installer exe provided"
+		exit 1
 	else
 		sh -c "$PROTONEXEC run $2"
 	fi
@@ -101,7 +107,7 @@ elif [[ $1 = "debug" ]]; then
 	echo "Command Line:"
 	echo "sh -c \"$PROTONEXEC run $TSPATH\""
 	echo
-	if [[ $USE_OWN_PROTONVERSION == true ]]; then
+	if [[-n "$PROTON_CUSTOM_VERSION" ]]; then
 		echo "Proton: custom $PROTON_CUSTOM_VERSION"
 	else
 		echo "Proton: official $PROTON_OFFICIAL_VERSION"
