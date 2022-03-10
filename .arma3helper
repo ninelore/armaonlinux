@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 #####################################################################################
 ## Arma3helper.sh CONFIG FILE (This will override settings made in Arma3Helper.sh) ##
