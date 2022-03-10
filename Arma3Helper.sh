@@ -161,7 +161,7 @@ else
 	echo
 	echo "./Arma3Helper.sh                                      - Start Teamspeak"
 	echo
-	echo "./Arma3Helper.sgh install [installer exe path]        - Install Teamspeak"
+	echo "./Arma3Helper.sh install [installer exe path]         - Install Teamspeak"
 	echo
 	echo "./Arma3Helper.sh winetricks [winetricks arguments]    - Run a winetricks command inside the Arma prefix"
 	echo
