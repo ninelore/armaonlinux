@@ -49,7 +49,7 @@ fi
 _checkinstall() {
 	if [[ ! -x "$1" ]]; then
 		echo -e "\e[31mError\e[0m: $2 is not installed!"
-        exit 1
+		exit 1
 	fi
 }
 
@@ -91,19 +91,17 @@ if [[ -z $* ]]; then
 	# Check if TS is installed
     _checkinstall "$TSPATH" "TeamSpeak"
 	echo -e "\e[31mDon't forget to adjust the settings in the script!\e[0m \n"
-	echo
 	sh -c "$PROTONEXEC run '$TSPATH'"
 # TS installer
 elif [[ $1 == "install" ]]; then 
 	echo "Trying to install Teamspeak with provided file"
-	echo "INSTALL TEAMSPEAK FOR ALL USERS AND LEAVE THE PATH DEFAULT!!!"
+	echo "\e[31mINSTALL TEAMSPEAK FOR ALL USERS AND LEAVE THE PATH DEFAULT!!!\e[0m \n"
 	sleep 2
 	if [[ -z $2 ]]; then
 		echo "Error - no installer exe provided"
 		exit 1
-	else
-		sh -c "$PROTONEXEC run $2"
 	fi
+	sh -c "$PROTONEXEC run $2"
 # Debug information
 elif [[ $1 = "debug" ]]; then
 	echo "DEBUGGING INFORMATION"
@@ -119,16 +117,11 @@ elif [[ $1 = "debug" ]]; then
 		echo "Proton: official $PROTON_OFFICIAL_VERSION"
 	fi
 	echo
-	if [[ -n $STEAM_COMPAT_DATA_PATH ]]; then
-		echo "Enviromentals were successfully set"
-		echo
-		echo "STEAM_COMPAT_DATA_PATH: $STEAM_COMPAT_DATA_PATH"
-		echo "SteamAppId/SteamGameId: $SteamAppId $SteamGameId"
-		echo "ESync: $ESYNC"
-		echo "FSync: $FSYNC"
-	else
-		echo "Enviromentals failed"
-	fi
+	echo "Enviromentals"
+	echo "STEAM_COMPAT_DATA_PATH: $STEAM_COMPAT_DATA_PATH"
+	echo "SteamAppId/SteamGameId: $SteamAppId $SteamGameId"
+	echo "ESync: $ESYNC"
+	echo "FSync: $FSYNC"
 # Winetricks wrapper for Arma's compatdata
 elif [[ $1 = "winetricks" ]]; then
 	echo "Executing winetricks inside Arma's compatdata prefix..."
@@ -154,13 +147,15 @@ else
 	echo -e "\e[31mEspecially check that Esync and Fsync match with Arma!\e[0m"
 	echo -e "\e[31mAlso check that you use the right Proton version!\e[0m"
 	echo
-	echo "./Arma3Helper.sh										- start Teamspeak"
+	echo "./Arma3Helper.sh	                                    - Start Teamspeak"
 	echo
-	echo "./Arma3Helper.sh install [installer exe path]			- install Teamspeak"
+	echo "./Arma3Helper.sh install [installer exe path]	        - Install Teamspeak"
 	echo
-	echo "./Arma3Helper.sh winetricks [winetricks arguments]	- Run a winetricks command inside the Arma prefix"
+	echo "./Arma3Helper.sh winetricks [winetricks arguments]    - Run a winetricks command inside the Arma prefix"
 	echo
-	echo "./Arma3Helper.sh winetricks Arma						- Install recommended Features/DLLs for Arma via winetricks [As per Guide Chapter 5.1]"
+	echo "./Arma3Helper.sh winetricks Arma                      - Install recommended Features/DLLs for Arma via winetricks [As per Guide Chapter 5.1]"
 	echo
-	echo "./Arma3Helper.sh debug								- Print Debugging Information"
+	echo "./Arma3Helper.sh winecfg                              - Run winecfg for the Arma prefix"
+	echo
+	echo "./Arma3Helper.sh debug                                - Print Debugging Information"
 fi
