@@ -54,7 +54,7 @@ _checkinstall() {
 }
 
 # Enviromentals
-if [[ -z "$COMPAT_DATA_PATH" ]]
+if [[ -z "$COMPAT_DATA_PATH" ]]; then
 	COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
 fi
 export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH"
