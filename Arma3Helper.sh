@@ -147,9 +147,9 @@ else
 	echo -e "\e[31mEspecially check that Esync and Fsync match with Arma!\e[0m"
 	echo -e "\e[31mAlso check that you use the right Proton version!\e[0m"
 	echo
-	echo "./Arma3Helper.sh	                                    - Start Teamspeak"
+	echo "./Arma3Helper.sh                                      - Start Teamspeak"
 	echo
-	echo "./Arma3Helper.sh install [installer exe path]	        - Install Teamspeak"
+	echo "./Arma3Helper.sh install [installer exe path]         - Install Teamspeak"
 	echo
 	echo "./Arma3Helper.sh winetricks [winetricks arguments]    - Run a winetricks command inside the Arma prefix"
 	echo
