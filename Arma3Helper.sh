@@ -9,7 +9,7 @@
 _SCRIPTVER="1v18-1"
 
 #####################################################################################
-## Adjust below or use the ~/.arma3helper config file
+## Adjust below or use the external config file
 #####################################################################################
 
 ## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!
@@ -36,10 +36,10 @@ ESYNC=true
 FSYNC=true
 
 ###########################################################################
-## DO NOT EDIT BELOW!
+##        DO NOT EDIT BELOW!
 ###########################################################################
 
-# Read settings from .arma3helper if it exists
+# Read settings from external config if it exists
 if [[ -e "$XDG_CONFIG_HOME/arma3helper/config" ]]; then
 	echo "Config file .arma3helper found. Using its values."
 	source "$XDG_CONFIG_HOME/arma3helper/config"
