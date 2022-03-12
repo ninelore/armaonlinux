@@ -42,7 +42,7 @@ FSYNC=true
 # Read settings from .arma3helper if it exists
 if [[ -e "$XDG_CONFIG_HOME/arma3helper/config" ]]; then
 	echo "Config file .arma3helper found. Using its values."
-	source $XDG_CONFIG_HOME/arma3helper/config
+	source "$XDG_CONFIG_HOME/arma3helper/config"
 fi
 
 # Installed check ($1 = path; $2 = name in error msg)
@@ -105,7 +105,7 @@ elif [[ $1 = "debug" ]]; then
 	echo
 	echo "Script Version: $_SCRIPTVER"
 	_UPVER=$(curl -s https://raw.githubusercontent.com/ninelore/armaonlinux/master/version)
-	if [[ $_SCRIPTVER != $_UPVER ]]; then
+	if [[ $_SCRIPTVER != "$_UPVER" ]]; then
 		echo -e "\e[31mScript Version $_UPVER is available!\e[0m"
 		echo "https://github.com/ninelore/armaonlinux"
 	fi
