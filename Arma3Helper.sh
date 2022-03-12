@@ -40,9 +40,9 @@ FSYNC=true
 ###########################################################################
 
 # Read settings from .arma3helper if it exists
-if [[ -e "$HOME/.arma3helper" ]]; then
+if [[ -e "$XDG_CONFIG_HOME/arma3helper/config" ]]; then
 	echo "Config file .arma3helper found. Using its values."
-	source $HOME/.arma3helper
+	source $XDG_CONFIG_HOME/arma3helper/config
 fi
 
 # Installed check ($1 = path; $2 = name in error msg)
