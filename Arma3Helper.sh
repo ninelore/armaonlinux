@@ -41,8 +41,11 @@ FSYNC=true
 
 # Read settings from external config if it exists
 if [[ -e "$XDG_CONFIG_HOME/arma3helper/config" ]]; then
-	echo "Config file .arma3helper found. Using its values."
+	echo "Config file $XDG_CONFIG_HOME/arma3helper/config found. Using its values."
 	source "$XDG_CONFIG_HOME/arma3helper/config"
+elif [[ -e "$HOME/.config/arma3helper/config" ]]; then
+	echo "Config file $HOME/.config/arma3helper/config found. Using its values."
+	source "$HOME/.config/arma3helper/config"
 fi
 
 # Installed check ($1 = path; $2 = name in error msg)
