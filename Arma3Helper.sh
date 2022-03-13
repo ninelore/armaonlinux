@@ -39,15 +39,18 @@ FSYNC=true
 ##        DO NOT EDIT BELOW!
 ###########################################################################
 
-# Read settings from external config if it exists
-if [[ -e "$XDG_CONFIG_HOME/arma3helper/config" ]]; then
-	echo "Config file $XDG_CONFIG_HOME/arma3helper/config found. Using its values."
-	source "$XDG_CONFIG_HOME/arma3helper/config"
-elif [[ -e "$HOME/.config/arma3helper/config" ]]; then
-	echo "Config file $HOME/.config/arma3helper/config found. Using its values."
-	source "$HOME/.config/arma3helper/config"
+# Check if $XDG_CONFIG_HOME exists, then read user config if it exists
+if [[ -n "$XDG_CONFIG_HOME" ]]; then
+	USERCONFIG="$XDG_CONFIG_HOME/arma3helper"
+else
+	USERCONFIG="$HOME/.config/arma3helper"
+fi
+if [[ -e "$USERCONFIG/config" ]]; then
+	echo "Config file $USERCONFIG/config found. Using its values."
+	source "$USERCONFIG/config"
 fi
 
+## FUNCTIONS
 # Installed check ($1 = path; $2 = name in error msg)
 _checkinstall() {
 	if [[ ! -x "$1" ]]; then
@@ -55,6 +58,7 @@ _checkinstall() {
 		exit 1
 	fi
 }
+# Confirmation prompt
 _confirmation() {
 	read -p "$1 (y/n) " -n 1 -r
 	echo 
@@ -64,7 +68,7 @@ _confirmation() {
 	fi
 }
 
-# Enviromentals
+## ENVIROMENT
 if [[ -z "$COMPAT_DATA_PATH" ]]; then
 	COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
 fi
@@ -161,13 +165,14 @@ elif [[ $1 = "update" ]]; then
 	curl -o "$0" https://raw.githubusercontent.com/ninelore/armaonlinux/master/Arma3Helper.sh
 	echo "The Script was updated!"
 # create extermal config
-elif [[ $1= "createconfig" ]]; then
-	if [[ -n "$XDG_CONFIG_HOME" ]]; then
-		if [[ -e "$XDG_CONFIG_HOME/arma3helper/config" ]]; then
+elif [[ $1 = "createconfig" ]]; then
+	if [[ -r "$USERCONFIG/config" ]]; then
 		echo -e "\e[31mA config file already exists!\e[0m"
 		_confirmation "Do you want to override it?"
+	else
+		mkdir -p $USERCONFIG
 	fi
-
+	curl -o "$USERCONFIG/config" https://raw.githubusercontent.com/ninelore/armaonlinux/1v18/config # Change to master on merge!
 else
 	echo "SCRIPT USAGE"
 	echo
