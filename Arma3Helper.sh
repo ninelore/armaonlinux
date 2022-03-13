@@ -191,4 +191,6 @@ else
 	echo "./Arma3Helper.sh debug                                - Print Debugging Information"
 	echo 
 	echo "./Arma3Helper.sh update                               - Update the script from github master"
+	echo
+	echo "./Arma3Helper.sh createconfig                         - Creates an external config file in your ~/.config/ directory"
 fi
