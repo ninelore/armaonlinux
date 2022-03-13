@@ -39,7 +39,7 @@ FSYNC=true
 ##        DO NOT EDIT BELOW!
 ###########################################################################
 
-# Check if $XDG_CONFIG_HOME exists, then read user config if it exists
+# Check if $XDG_CONFIG_HOME exists, then read external config if it exists
 if [[ -n "$XDG_CONFIG_HOME" ]]; then
 	USERCONFIG="$XDG_CONFIG_HOME/arma3helper"
 else
@@ -170,7 +170,7 @@ elif [[ $1 = "createconfig" ]]; then
 		echo -e "\e[31mA config file already exists!\e[0m"
 		_confirmation "Do you want to override it?"
 	else
-		mkdir -p $USERCONFIG
+		mkdir -p "$USERCONFIG"
 	fi
 	curl -o "$USERCONFIG/config" https://raw.githubusercontent.com/ninelore/armaonlinux/1v18/config # Change to master on merge!
 else
