@@ -52,6 +52,14 @@ _checkinstall() {
 		exit 1
 	fi
 }
+_confirmation() {
+	read -p "$1 (y/n) " -n 1 -r
+	echo 
+	if [[ ! $REPLY =~ ^[Yy]$ ]]
+	then
+    	exit 1
+	fi
+}
 
 # Enviromentals
 if [[ -z "$COMPAT_DATA_PATH" ]]; then
@@ -146,14 +154,17 @@ elif [[ $1 = "winecfg" ]]; then
 elif [[ $1 = "update" ]]; then
 	echo -e "\e[31mUpdating the script will reset your changes in the script options!\e[0m"
 	echo "However, it will not reset your settings in ~/.arma3helper."
-	read -p "Are you sure you want to update? (y/n) " -n 1 -r
-	echo 
-	if [[ ! $REPLY =~ ^[Yy]$ ]]
-	then
-    	exit 1
-	fi
+	_confirmation "Are you sure?"
 	curl -o "$0" https://raw.githubusercontent.com/ninelore/armaonlinux/master/Arma3Helper.sh
 	echo "The Script was updated!"
+# create extermal config
+elif [[ $1= "createconfig" ]]; then
+	if [[ -n "$XDG_CONFIG_HOME" ]]; then
+		if [[ -e "$XDG_CONFIG_HOME/arma3helper/config" ]]; then
+		echo -e "\e[31mA config file already exists!\e[0m"
+		_confirmation "Do you want to override it?"
+	fi
+
 else
 	echo "SCRIPT USAGE"
 	echo
