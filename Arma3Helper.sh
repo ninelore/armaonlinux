@@ -142,7 +142,7 @@ elif [[ $1 = "debug" ]]; then
 # Winetricks wrapper for Arma's compatdata
 elif [[ $1 = "winetricks" ]]; then
 	echo "Executing winetricks inside Arma's compatdata prefix..."
-	_checkinstall "/usr/bin/winetricks" "windtricks"
+	_checkinstall "/usr/bin/winetricks" "winetricks"
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
 	if [[ $2 = "Arma" ]]; then
 		echo "Installing recommended features/DLLs for Arma"
