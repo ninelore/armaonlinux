@@ -172,7 +172,7 @@ elif [[ $1 = "createconfig" ]]; then
 	else
 		mkdir -p "$USERCONFIG"
 	fi
-	curl -o "$USERCONFIG/config" https://raw.githubusercontent.com/ninelore/armaonlinux/1v18/config # Change to master on merge!
+	curl -o "$USERCONFIG/config" https://raw.githubusercontent.com/ninelore/armaonlinux/master/config
 else
 	echo "SCRIPT USAGE"
 	echo
