@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+#####################################################################################
+## Arma3helper.sh CONFIG FILE (This will override settings made in Arma3Helper.sh) 
+#####################################################################################
+
+## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!
+# Set this to the Proton Version you are using with Arma!
+# Available versions: "Proton Experimental", "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7"
+PROTON_OFFICIAL_VERSION="7.0"
+
+## Path to Arma's compatdata (wineprefix)
+# Leave empty if Arma is installed in Steams default directory
+COMPAT_DATA_PATH=""
+
+# If you have proton in a different steam library, then put the path to its steamapps folder here
+# Leave empty 
+STEAM_LIBRARY_PATH=""
+
+# If you are using a custom proton build, then put its folder name (from inside compatibilitytools.d) here
+PROTON_CUSTOM_VERSION=""
+
+## Esync/Fsync
+# IMPORTANT: Make sure that Esync and Fsync settings MATCH for both Arma and TeamSpeak(here)
+# If you havent explicitly turned it off for Arma, leave it on here!
+ESYNC=true
+FSYNC=true

@@ -5,43 +5,73 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v17-4
-_SCRIPTVER="1v17-4"
+# Version 1v18-1
+_SCRIPTVER="1v18-1"
 
-###########################################################################
-## Adjust below!
-###########################################################################
+#####################################################################################
+## Adjust below or use the external config file
+#####################################################################################
 
-## Path to Arma's compatdata (wineprefix)
-# Leave default if Arma was installed in Steams default directory
-COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
-
-## MAKE SURE THIS IS THE SAME AS THE PROTON VERSION OF ARMA IN STEAM!!!
+## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!
 # Set this to the Proton Version you are using with Arma!
-# Available versions:
-# Proton Experimental, 7.0, 6.3, 5.13, 5.0, 4.11, 4.2, 3.16, 3.7
+# Available versions: "Proton Experimental", "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7"
 PROTON_OFFICIAL_VERSION="7.0"
 
-# Set to true if you have proton installed in a seperate steam library
-USE_DIFFERENT_STEAM_LIBRARY=false
-# Path to steam library (steamapps folder)
+## Path to Arma's compatdata (wineprefix)
+# Leave empty if Arma is installed in Steams default library
+COMPAT_DATA_PATH=""
+
+# If you have proton in a different steam library, then put the path to its steamapps folder here
+# Leave empty if Proton is installed in Steams default library
 STEAM_LIBRARY_PATH=""
 
-# Set to true if you want to use custom proton in the compatibilitytoold.d folder
-USE_OWN_PROTONVERSION=false
-# Proton version (folder name in compatibilitytools.d)
+# If you are using a custom proton build, then put its folder name (from inside compatibilitytools.d) here
+# Leave empty if proton 
 PROTON_CUSTOM_VERSION=""
 
 ## Esync/Fsync
-# WARNING: Make sure that both Arma and Teamspeak either use or dont use Esync and/or Fsync!!!
+# IMPORTANT: Make sure that Esync and Fsync settings MATCH for both Arma and TeamSpeak(here)
+# If you havent explicitly turned it off for Arma, leave it on here!
 ESYNC=true
 FSYNC=true
 
 ###########################################################################
-## DO NOT EDIT BELOW!
+##        DO NOT EDIT BELOW!
 ###########################################################################
 
-# Enviromentals
+# Check if $XDG_CONFIG_HOME exists, then read external config if it exists
+if [[ -n "$XDG_CONFIG_HOME" ]]; then
+	USERCONFIG="$XDG_CONFIG_HOME/arma3helper"
+else
+	USERCONFIG="$HOME/.config/arma3helper"
+fi
+if [[ -e "$USERCONFIG/config" ]]; then
+	echo "Config file $USERCONFIG/config found. Using its values."
+	source "$USERCONFIG/config"
+fi
+
+## FUNCTIONS
+# Installed check ($1 = path; $2 = name in error msg)
+_checkinstall() {
+	if [[ ! -x "$1" ]]; then
+		echo -e "\e[31mError\e[0m: $2 is not installed!"
+		exit 1
+	fi
+}
+# Confirmation prompt
+_confirmation() {
+	read -p "$1 (y/n) " -n 1 -r
+	echo 
+	if [[ ! $REPLY =~ ^[Yy]$ ]]
+	then
+    	exit 1
+	fi
+}
+
+## ENVIROMENT
+if [[ -z "$COMPAT_DATA_PATH" ]]; then
+	COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
+fi
 export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH"
 export STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/steam"
 export SteamAppId="107410"
@@ -52,19 +82,16 @@ fi
 if [[ $FSYNC == false ]]; then
 	export PROTON_NO_FSYNC="1"
 fi
-
 if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" ]]; then
 	PROTON_OFFICIAL_VERSION="-\ Experimental"
 fi
-
 TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program Files/TeamSpeak 3 Client/ts3client_win64.exe"
-#export LD_PRELOAD="$HOME/.local/share/Steam/ubuntu12_64/gameoverlayrenderer.so" ## deprecated and subject of removal
 
 # Executable paths
-if [[ $USE_OWN_PROTONVERSION == true ]]; then
+if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 	PROTONEXEC="$HOME/.steam/steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
 else
-	if [[ $USE_DIFFERENT_STEAM_LIBRARY == true ]]; then
+	if [[ -n "$STEAM_LIBRARY_PATH" ]]; then
 		PROTONEXEC="$STEAM_LIBRARY_PATH/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
 	else
 		PROTONEXEC="$HOME/.steam/steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
@@ -74,52 +101,48 @@ fi
 # Start
 if [[ -z $* ]]; then
 	# Check if TS is installed
-    ERR="$(ls "$TSPATH" 2> /dev/null)"
-    if [[ ${#ERR} == 0 ]]; then
-        echo -e "\e[31mError\e[0m: TeamSpeak is not installed!"
-        exit 1
-    fi
+    _checkinstall "$TSPATH" "TeamSpeak"
 	echo -e "\e[31mDon't forget to adjust the settings in the script!\e[0m \n"
-	echo
 	sh -c "$PROTONEXEC run '$TSPATH'"
 # TS installer
 elif [[ $1 == "install" ]]; then 
 	echo "Trying to install Teamspeak with provided file"
-	echo "INSTALL TEAMSPEAK FOR ALL USERS AND LEAVE THE PATH DEFAULT!!!"
+	echo -e "\e[31mINSTALL TEAMSPEAK FOR ALL USERS AND LEAVE THE PATH DEFAULT!!!\e[0m \n"
 	sleep 2
 	if [[ -z $2 ]]; then
 		echo "Error - no installer exe provided"
-	else
-		sh -c "$PROTONEXEC run $2"
+		exit 1
 	fi
+	sh -c "$PROTONEXEC run $2"
 # Debug information
 elif [[ $1 = "debug" ]]; then
 	echo "DEBUGGING INFORMATION"
 	echo
 	echo "Script Version: $_SCRIPTVER"
+	_UPVER=$(curl -s https://raw.githubusercontent.com/ninelore/armaonlinux/master/version)
+	if [[ $_SCRIPTVER != "$_UPVER" ]]; then
+		echo -e "\e[31mScript Version $_UPVER is available!\e[0m"
+		echo "https://github.com/ninelore/armaonlinux"
+	fi
 	echo
 	echo "Command Line:"
 	echo "sh -c \"$PROTONEXEC run $TSPATH\""
 	echo
-	if [[ $USE_OWN_PROTONVERSION == true ]]; then
+	if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 		echo "Proton: custom $PROTON_CUSTOM_VERSION"
 	else
 		echo "Proton: official $PROTON_OFFICIAL_VERSION"
 	fi
 	echo
-	if [[ -n $STEAM_COMPAT_DATA_PATH ]]; then
-		echo "Enviromentals were successfully set"
-		echo
-		echo "STEAM_COMPAT_DATA_PATH: $STEAM_COMPAT_DATA_PATH"
-		echo "SteamAppId/SteamGameId: $SteamAppId $SteamGameId"
-		echo "ESync: $ESYNC"
-		echo "FSync: $FSYNC"
-	else
-		echo "Enviromentals failed"
-	fi
+	echo "Enviromental Variables"
+	echo "STEAM_COMPAT_DATA_PATH: $STEAM_COMPAT_DATA_PATH"
+	echo "SteamAppId/SteamGameId: $SteamAppId $SteamGameId"
+	echo "ESync: $ESYNC"
+	echo "FSync: $FSYNC"
 # Winetricks wrapper for Arma's compatdata
 elif [[ $1 = "winetricks" ]]; then
 	echo "Executing winetricks inside Arma's compatdata prefix..."
+	_checkinstall "/usr/bin/winetricks" "winetricks"
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
 	if [[ $2 = "Arma" ]]; then
 		echo "Installing recommended features/DLLs for Arma"
@@ -130,26 +153,44 @@ elif [[ $1 = "winetricks" ]]; then
 		winetricks "${*:2}"
 	fi
 elif [[ $1 = "winecfg" ]]; then
-	echo "Starting winecfg for Arma's compatdata..."
-	echo
+	echo "Starting winecfg via winetricks for Arma's compatdata..."
+	_checkinstall "/usr/bin/winetricks" "winetricks"
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
 	winetricks winecfg
+# Updater
+elif [[ $1 = "update" ]]; then
+	echo -e "\e[31mUpdating the script will reset your changes in the script options!\e[0m"
+	echo "However, it will not reset your settings in ~/.arma3helper."
+	_confirmation "Are you sure?"
+	curl -o "$0" https://raw.githubusercontent.com/ninelore/armaonlinux/master/Arma3Helper.sh
+	echo "The Script was updated!"
+# create extermal config
+elif [[ $1 = "createconfig" ]]; then
+	if [[ -e "$USERCONFIG/config" ]]; then
+		echo -e "\e[31mA config file already exists!\e[0m"
+		_confirmation "Do you want to override it?"
+	else
+		mkdir -p "$USERCONFIG"
+	fi
+	curl -o "$USERCONFIG/config" https://raw.githubusercontent.com/ninelore/armaonlinux/master/config
 else
 	echo "SCRIPT USAGE"
 	echo
-	echo -e "\e[31mDont forget to adjust settings by editing the script file!\e[0m"
-	echo -e "\e[31mEspecially check that Esync and Fsync match with Arma!\e[0m"
-	echo -e "\e[31mAlso check that you use the right Proton version!\e[0m"
+	echo -e "\e[31mDouble check the script settings at the top before reporting any problems!\e[0m"
 	echo
-	echo "./Arma3Helper.sh										- start Teamspeak"
+	echo "./Arma3Helper.sh                                      - Start Teamspeak"
 	echo
-	echo "./Arma3Helper.sh install [installer exe path]			- install Teamspeak"
+	echo "./Arma3Helper.sh install [installer exe path]         - Install Teamspeak"
 	echo
-	echo "./Arma3Helper.sh winetricks [winetricks arguments]	- Run a winetricks command inside the Arma prefix"
+	echo "./Arma3Helper.sh winetricks [winetricks arguments]    - Run a winetricks command inside the Arma prefix"
 	echo
-	echo "./Arma3Helper.sh winetricks Arma						- Install recommended Features/DLLs for Arma via winetricks [As per Guide Chapter 5.1]"
+	echo "./Arma3Helper.sh winetricks Arma                      - Install recommended Features/DLLs for Arma via winetricks [As per Guide Chapter 5.1]"
 	echo
-	echo "./Arma3Helper.sh debug								- Print Debugging Information"
+	echo "./Arma3Helper.sh winecfg                              - Run winecfg for the Arma prefix"
+	echo
+	echo "./Arma3Helper.sh debug                                - Print Debugging Information"
+	echo 
+	echo "./Arma3Helper.sh update                               - Update the script from github master"
+	echo
+	echo "./Arma3Helper.sh createconfig                         - Creates an external config file in your ~/.config/ directory"
 fi
-
-## End of File
