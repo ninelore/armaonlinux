@@ -166,7 +166,7 @@ elif [[ $1 = "update" ]]; then
 	echo "The Script was updated!"
 # create extermal config
 elif [[ $1 = "createconfig" ]]; then
-	if [[ -r "$USERCONFIG/config" ]]; then
+	if [[ -e "$USERCONFIG/config" ]]; then
 		echo -e "\e[31mA config file already exists!\e[0m"
 		_confirmation "Do you want to override it?"
 	else
