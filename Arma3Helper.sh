@@ -6,7 +6,7 @@
 # Testing:		G4rrus#3755 
 # 
 # Version 1v18-1
-_SCRIPTVER="1v18-1"
+_SCRIPTVER="1v19-0"
 
 #####################################################################################
 ## Adjust below or use the external config file
@@ -116,7 +116,7 @@ elif [[ $1 == "install" ]]; then
 		echo "Error - no installer exe provided"
 		exit 1
 	fi
-	sh -c "$PROTONEXEC run $2"
+	sh -c "$PROTONEXEC run '$2'"
 # Debug information
 elif [[ $1 = "debug" ]]; then
 	echo "DEBUGGING INFORMATION"
