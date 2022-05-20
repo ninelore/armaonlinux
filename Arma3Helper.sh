@@ -102,7 +102,10 @@ fi
 if [[ -z $* ]]; then
 	# Check if TS is installed
     _checkinstall "$TSPATH" "TeamSpeak"
-	echo -e "\e[31mDon't forget to adjust the settings in the script!\e[0m \n"
+	if ! pgrep -i arma3.exe && ! pgrep -i arma3_x64.exe ; then
+		echo -e "\e[31mArma should be started first!\e[0m \n"
+		exit 1
+	fi
 	sh -c "$PROTONEXEC run '$TSPATH'"
 # TS installer
 elif [[ $1 == "install" ]]; then 
