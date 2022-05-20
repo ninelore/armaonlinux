@@ -5,8 +5,8 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v18-1
-_SCRIPTVER="1v19-0"
+# Version 1v18-2
+_SCRIPTVER="1v18-2"
 
 #####################################################################################
 ## Adjust below or use the external config file
