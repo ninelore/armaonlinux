@@ -92,9 +92,9 @@ if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 	PROTONEXEC="$HOME/.steam/steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
 else
 	if [[ -n "$STEAM_LIBRARY_PATH" ]]; then
-		PROTONEXEC="$STEAM_LIBRARY_PATH/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
+		PROTONEXEC="$STEAM_LIBRARY_PATH/common/Proton $PROTON_OFFICIAL_VERSION/proton"
 	else
-		PROTONEXEC="$HOME/.steam/steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
+		PROTONEXEC="$HOME/.steam/steam/steamapps/common/Proton $PROTON_OFFICIAL_VERSION/proton"
 	fi
 fi
 
@@ -106,7 +106,7 @@ if [[ -z $* ]]; then
 		echo -e "\e[31mArma should be started first!\e[0m \n"
 		exit 1
 	fi
-	sh -c "$PROTONEXEC run '$TSPATH'"
+	sh -c "'$PROTONEXEC' run '$TSPATH'"
 # TS installer
 elif [[ $1 == "install" ]]; then 
 	echo "Trying to install Teamspeak with provided file"
@@ -116,7 +116,7 @@ elif [[ $1 == "install" ]]; then
 		echo "Error - no installer exe provided"
 		exit 1
 	fi
-	sh -c "$PROTONEXEC run '$2'"
+	sh -c "'$PROTONEXEC' run '$2'"
 # Debug information
 elif [[ $1 = "debug" ]]; then
 	echo "DEBUGGING INFORMATION"
