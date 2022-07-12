@@ -5,8 +5,8 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v18-2
-_SCRIPTVER="1v18-2"
+# Version 1v18-3
+_SCRIPTVER="1v18-3"
 
 #####################################################################################
 ## Adjust below or use the external config file
@@ -129,7 +129,7 @@ elif [[ $1 = "debug" ]]; then
 	fi
 	echo
 	echo "Command Line:"
-	echo "sh -c \"$PROTONEXEC run $TSPATH\""
+	echo "sh -c \"'$PROTONEXEC' run '$TSPATH'\""
 	echo
 	if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 		echo "Proton: custom $PROTON_CUSTOM_VERSION"
@@ -149,7 +149,7 @@ elif [[ $1 = "winetricks" ]]; then
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
 	if [[ $2 = "Arma" ]]; then
 		echo "Installing recommended features/DLLs for Arma"
-		winetricks d3dcompiler_43 d3dx10_43 d3dx11_43 mfc140 xact_x64
+		winetricks d3dcompiler_43 d3dx10_43 d3dx11_43 xact_x64
 		echo "done"
 	else
 		echo "Winetricks Arguments: ${*:2}"
