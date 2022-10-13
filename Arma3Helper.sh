@@ -89,8 +89,9 @@ fi
 if [[ $FSYNC == false ]]; then
 	export PROTON_NO_FSYNC="1"
 fi
-if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" ]]; then
-	PROTON_OFFICIAL_VERSION="-\ Experimental"
+if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" || $PROTON_OFFICIAL_VERSION == "Experimental" ]]; then
+	PROTON_OFFICIAL_VERSION="- Experimental"
+	IS_EXPERIMENTAL=true
 fi
 TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program Files/TeamSpeak 3 Client/ts3client_win64.exe"
 
@@ -140,12 +141,12 @@ elif [[ $1 = "debug" ]]; then
 	echo
 	if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 		echo "Proton: custom $PROTON_CUSTOM_VERSION"
-	elif [[ $PROTON_OFFICIAL_VERSION == "-\ Experimental" ]]
+	elif [[ $PROTON_OFFICIAL_VERSION == "-\ Experimental" ]]; then
 		echo "Proton: official Experimental"
 	else
 		echo "Proton: official $PROTON_OFFICIAL_VERSION"
 	fi
-	echo
+	echo $IS_EXPERIMENTAL
 	echo "Enviromental Variables"
 	echo "STEAM_COMPAT_DATA_PATH: $STEAM_COMPAT_DATA_PATH"
 	echo "SteamAppId/SteamGameId: $SteamAppId $SteamGameId"
