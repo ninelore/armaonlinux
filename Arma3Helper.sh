@@ -5,8 +5,8 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v18-3
-_SCRIPTVER="1v18-3"
+# Version 1v18-4
+_SCRIPTVER="1v18-4"
 
 #####################################################################################
 ## Adjust below or use the external config file
@@ -38,6 +38,13 @@ FSYNC=true
 ###########################################################################
 ##        DO NOT EDIT BELOW!
 ###########################################################################
+
+# Exit if run with different shell
+if  [ -n "$_" ]; then
+	echo "\e[31mFATAL: Do not run the script with sh or any other shell!\e[0m \n"
+	echo "Shell: $_"
+	exit
+fi
 
 # Check if $XDG_CONFIG_HOME exists, then read external config if it exists
 if [[ -n "$XDG_CONFIG_HOME" ]]; then
@@ -179,7 +186,7 @@ elif [[ $1 = "createconfig" ]]; then
 else
 	echo "SCRIPT USAGE"
 	echo
-	echo -e "\e[31mDouble check the script settings at the top before reporting any problems!\e[0m"
+	echo -e "\e[31mDouble check the script settings before reporting any problems!\e[0m"
 	echo
 	echo "./Arma3Helper.sh                                      - Start Teamspeak"
 	echo
