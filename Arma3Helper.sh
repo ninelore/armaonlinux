@@ -41,7 +41,7 @@ FSYNC=true
 
 # Exit if run with different shell
 if  [ -n "$_" ]; then
-	printf "\e[31mFATAL: Do not run the script with sh or any other shell!\e[0m \n"
+	echo "FATAL: Do not run the script with sh or any other shell!"
 	echo "Shell: $_"
 	exit
 fi
