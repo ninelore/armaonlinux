@@ -5,8 +5,8 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v18-4
-_SCRIPTVER="1v18-4"
+# Version 1v18-5
+_SCRIPTVER="1v18-5"
 
 #####################################################################################
 ## Adjust below or use the external config file
@@ -14,8 +14,9 @@ _SCRIPTVER="1v18-4"
 
 ## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!
 # Set this to the Proton Version you are using with Arma!
-# Available versions: "Proton Experimental", "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7"
-PROTON_OFFICIAL_VERSION="7.0"
+# Available versions: "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7", "Proton Experimental", "Experimental"
+# Defaults to: 7.0
+PROTON_OFFICIAL_VERSION=""
 
 ## Path to Arma's compatdata (wineprefix)
 # Leave empty if Arma is installed in Steams default library
@@ -75,7 +76,7 @@ _confirmation() {
 	fi
 }
 
-## ENVIROMENT
+## ENVIROMENTAL VARAIBLES
 if [[ -z "$COMPAT_DATA_PATH" ]]; then
 	COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
 fi
@@ -89,11 +90,15 @@ fi
 if [[ $FSYNC == false ]]; then
 	export PROTON_NO_FSYNC="1"
 fi
+TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program Files/TeamSpeak 3 Client/ts3client_win64.exe"
+
+# Handle Proton Experimental or empty Version string
 if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" || $PROTON_OFFICIAL_VERSION == "Experimental" ]]; then
 	PROTON_OFFICIAL_VERSION="- Experimental"
 	IS_EXPERIMENTAL=true
+elif [[ -z $PROTON_OFFICIAL_VERSION ]]; then
+	PROTON_OFFICIAL_VERSION="7.0"
 fi
-TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program Files/TeamSpeak 3 Client/ts3client_win64.exe"
 
 # Executable paths
 if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
@@ -141,12 +146,12 @@ elif [[ $1 = "debug" ]]; then
 	echo
 	if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 		echo "Proton: custom $PROTON_CUSTOM_VERSION"
-	elif [[ $PROTON_OFFICIAL_VERSION == "-\ Experimental" ]]; then
+	elif [[ $IS_EXPERIMENTAL == true ]]; then
 		echo "Proton: official Experimental"
 	else
 		echo "Proton: official $PROTON_OFFICIAL_VERSION"
 	fi
-	echo $IS_EXPERIMENTAL
+	echo
 	echo "Enviromental Variables"
 	echo "STEAM_COMPAT_DATA_PATH: $STEAM_COMPAT_DATA_PATH"
 	echo "SteamAppId/SteamGameId: $SteamAppId $SteamGameId"

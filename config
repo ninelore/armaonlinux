@@ -6,8 +6,9 @@
 
 ## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!
 # Set this to the Proton Version you are using with Arma!
-# Available versions: "Proton Experimental", "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7"
-PROTON_OFFICIAL_VERSION="7.0"
+# Available versions: "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7", "Proton Experimental", "Experimental"
+# Defaults to: 7.0
+PROTON_OFFICIAL_VERSION=""
 
 ## Path to Arma's compatdata (wineprefix)
 # Leave empty if Arma is installed in Steams default directory
