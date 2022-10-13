@@ -140,6 +140,8 @@ elif [[ $1 = "debug" ]]; then
 	echo
 	if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 		echo "Proton: custom $PROTON_CUSTOM_VERSION"
+	elif [[ $PROTON_OFFICIAL_VERSION == "-\ Experimental" ]]
+		echo "Proton: official Experimental"
 	else
 		echo "Proton: official $PROTON_OFFICIAL_VERSION"
 	fi
