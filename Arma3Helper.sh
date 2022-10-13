@@ -5,8 +5,8 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v18-1
-_SCRIPTVER="1v18-1"
+# Version 1v18-5
+_SCRIPTVER="1v18-5"
 
 #####################################################################################
 ## Adjust below or use the external config file
@@ -14,8 +14,9 @@ _SCRIPTVER="1v18-1"
 
 ## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!
 # Set this to the Proton Version you are using with Arma!
-# Available versions: "Proton Experimental", "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7"
-PROTON_OFFICIAL_VERSION="7.0"
+# Available versions: "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7", "Proton Experimental", "Experimental"
+# Defaults to: 7.0
+PROTON_OFFICIAL_VERSION=""
 
 ## Path to Arma's compatdata (wineprefix)
 # Leave empty if Arma is installed in Steams default library
@@ -38,6 +39,13 @@ FSYNC=true
 ###########################################################################
 ##        DO NOT EDIT BELOW!
 ###########################################################################
+
+# Exit if run with different shell
+if  [ -n "$_" ]; then
+	echo "FATAL: Do not run the script with sh or any other shell!"
+	echo "Shell: $_"
+	exit
+fi
 
 # Check if $XDG_CONFIG_HOME exists, then read external config if it exists
 if [[ -n "$XDG_CONFIG_HOME" ]]; then
@@ -68,7 +76,7 @@ _confirmation() {
 	fi
 }
 
-## ENVIROMENT
+## ENVIROMENTAL VARAIBLES
 if [[ -z "$COMPAT_DATA_PATH" ]]; then
 	COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
 fi
@@ -82,19 +90,24 @@ fi
 if [[ $FSYNC == false ]]; then
 	export PROTON_NO_FSYNC="1"
 fi
-if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" ]]; then
-	PROTON_OFFICIAL_VERSION="-\ Experimental"
-fi
 TSPATH="$COMPAT_DATA_PATH/pfx/drive_c/Program Files/TeamSpeak 3 Client/ts3client_win64.exe"
+
+# Handle Proton Experimental or empty Version string
+if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" || $PROTON_OFFICIAL_VERSION == "Experimental" ]]; then
+	PROTON_OFFICIAL_VERSION="- Experimental"
+	IS_EXPERIMENTAL=true
+elif [[ -z $PROTON_OFFICIAL_VERSION ]]; then
+	PROTON_OFFICIAL_VERSION="7.0"
+fi
 
 # Executable paths
 if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 	PROTONEXEC="$HOME/.steam/steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
 else
 	if [[ -n "$STEAM_LIBRARY_PATH" ]]; then
-		PROTONEXEC="$STEAM_LIBRARY_PATH/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
+		PROTONEXEC="$STEAM_LIBRARY_PATH/common/Proton $PROTON_OFFICIAL_VERSION/proton"
 	else
-		PROTONEXEC="$HOME/.steam/steam/steamapps/common/Proton\ $PROTON_OFFICIAL_VERSION/proton"
+		PROTONEXEC="$HOME/.steam/steam/steamapps/common/Proton $PROTON_OFFICIAL_VERSION/proton"
 	fi
 fi
 
@@ -102,8 +115,11 @@ fi
 if [[ -z $* ]]; then
 	# Check if TS is installed
     _checkinstall "$TSPATH" "TeamSpeak"
-	echo -e "\e[31mDon't forget to adjust the settings in the script!\e[0m \n"
-	sh -c "$PROTONEXEC run '$TSPATH'"
+	if ! pgrep -i arma3.exe && ! pgrep -i arma3_x64.exe ; then
+		echo -e "\e[31mArma should be started first!\e[0m \n"
+		exit 1
+	fi
+	sh -c "'$PROTONEXEC' run '$TSPATH'"
 # TS installer
 elif [[ $1 == "install" ]]; then 
 	echo "Trying to install Teamspeak with provided file"
@@ -113,7 +129,7 @@ elif [[ $1 == "install" ]]; then
 		echo "Error - no installer exe provided"
 		exit 1
 	fi
-	sh -c "$PROTONEXEC run $2"
+	sh -c "'$PROTONEXEC' run '$2'"
 # Debug information
 elif [[ $1 = "debug" ]]; then
 	echo "DEBUGGING INFORMATION"
@@ -126,10 +142,12 @@ elif [[ $1 = "debug" ]]; then
 	fi
 	echo
 	echo "Command Line:"
-	echo "sh -c \"$PROTONEXEC run $TSPATH\""
+	echo "sh -c \"'$PROTONEXEC' run '$TSPATH'\""
 	echo
 	if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
 		echo "Proton: custom $PROTON_CUSTOM_VERSION"
+	elif [[ $IS_EXPERIMENTAL == true ]]; then
+		echo "Proton: official Experimental"
 	else
 		echo "Proton: official $PROTON_OFFICIAL_VERSION"
 	fi
@@ -146,7 +164,7 @@ elif [[ $1 = "winetricks" ]]; then
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
 	if [[ $2 = "Arma" ]]; then
 		echo "Installing recommended features/DLLs for Arma"
-		winetricks d3dcompiler_43 d3dx10_43 d3dx11_43 mfc140 xact_x64
+		winetricks d3dcompiler_43 d3dx10_43 d3dx11_43 xact_x64
 		echo "done"
 	else
 		echo "Winetricks Arguments: ${*:2}"
@@ -176,7 +194,7 @@ elif [[ $1 = "createconfig" ]]; then
 else
 	echo "SCRIPT USAGE"
 	echo
-	echo -e "\e[31mDouble check the script settings at the top before reporting any problems!\e[0m"
+	echo -e "\e[31mDouble check the script settings before reporting any problems!\e[0m"
 	echo
 	echo "./Arma3Helper.sh                                      - Start Teamspeak"
 	echo
