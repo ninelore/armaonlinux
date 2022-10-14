@@ -76,7 +76,7 @@ _confirmation() {
 	fi
 }
 
-## ENVIROMENTAL VARAIBLES
+## ENVIROMENTAL VARIABLES
 if [[ -z "$COMPAT_DATA_PATH" ]]; then
 	COMPAT_DATA_PATH="$HOME/.steam/steam/steamapps/compatdata/107410"
 fi
