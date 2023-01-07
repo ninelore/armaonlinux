@@ -30,6 +30,11 @@ STEAM_LIBRARY_PATH=""
 # Leave empty if proton 
 PROTON_CUSTOM_VERSION=""
 
+# If you are using an external proton build (such as AUR proton-ge-custom), then put the path to compatibilitytools.d here
+# Leave empty if proton is installed in the default location
+# Example path: "/usr/share/steam/compatibilitytools.d"
+PROTON_CUSTOM_VERSION_PATH=
+
 ## Esync/Fsync
 # IMPORTANT: Make sure that Esync and Fsync settings MATCH for both Arma and TeamSpeak(here)
 # If you havent explicitly turned it off for Arma, leave it on here!
@@ -102,7 +107,11 @@ fi
 
 # Executable paths
 if [[ -n "$PROTON_CUSTOM_VERSION" ]]; then
-	PROTONEXEC="$HOME/.steam/steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
+	if [[ -n "$PROTON_CUSTOM_VERSION_PATH" ]]; then
+		PROTONEXEC="$PROTON_CUSTOM_VERSION_PATH/$PROTON_CUSTOM_VERSION/proton"
+	else
+		PROTONEXEC="$HOME/.steam/steam/compatibilitytools.d/$PROTON_CUSTOM_VERSION/proton"
+	fi
 else
 	if [[ -n "$STEAM_LIBRARY_PATH" ]]; then
 		PROTONEXEC="$STEAM_LIBRARY_PATH/common/Proton $PROTON_OFFICIAL_VERSION/proton"
