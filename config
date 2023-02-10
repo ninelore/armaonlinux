@@ -11,15 +11,21 @@
 PROTON_OFFICIAL_VERSION=""
 
 ## Path to Arma's compatdata (wineprefix)
-# Leave empty if Arma is installed in Steams default directory
+# Leave empty if Arma is installed in Steams default library
 COMPAT_DATA_PATH=""
 
 # If you have proton in a different steam library, then put the path to its steamapps folder here
-# Leave empty 
+# Leave empty if Proton is installed in Steams default library
 STEAM_LIBRARY_PATH=""
 
 # If you are using a custom proton build, then put its folder name (from inside compatibilitytools.d) here
+# Leave empty if proton 
 PROTON_CUSTOM_VERSION=""
+
+# If you are using an external proton build (such as AUR proton-ge-custom), then put the path to compatibilitytools.d here
+# Leave empty if proton is installed in the default location
+# Example path: "/usr/share/steam/compatibilitytools.d"
+PROTON_CUSTOM_VERSION_PATH=
 
 ## Esync/Fsync
 # IMPORTANT: Make sure that Esync and Fsync settings MATCH for both Arma and TeamSpeak(here)
