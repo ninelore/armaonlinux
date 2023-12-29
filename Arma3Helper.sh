@@ -5,8 +5,8 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v18-5
-_SCRIPTVER="1v18-5"
+# Version 1v18-6
+_SCRIPTVER="1v18-6"
 
 #####################################################################################
 ## Adjust below or use the external config file
@@ -14,8 +14,8 @@ _SCRIPTVER="1v18-5"
 
 ## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!
 # Set this to the Proton Version you are using with Arma!
-# Available versions: "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7", "Proton Experimental", "Experimental"
-# Defaults to: 7.0
+# Available versions: "8.0 7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7", "Proton Experimental", "Experimental"
+# Defaults to: 8.0
 PROTON_OFFICIAL_VERSION=""
 
 ## Path to Arma's compatdata (wineprefix)
@@ -61,6 +61,13 @@ fi
 ## FUNCTIONS
 # Installed check ($1 = path; $2 = name in error msg)
 _checkinstall() {
+	if [[ ! $(command -v $1) ]]; then
+		echo -e "\e[31mError\e[0m: $1 is not installed!"
+		exit 1
+	fi
+}
+# Installed check by path ($1 = path; $2 = name in error msg)
+_checkpath() {
 	if [[ ! -x "$1" ]]; then
 		echo -e "\e[31mError\e[0m: $2 is not installed!"
 		exit 1
@@ -73,6 +80,22 @@ _confirmation() {
 	if [[ ! $REPLY =~ ^[Yy]$ ]]
 	then
     	exit 1
+	fi
+}
+# Get the command to modify the protonprefix
+_get_wrappercmd() {
+	no_winetricks=$(_checkinstall "winetricks")
+	no_protontricks=$(_checkinstall "protontricks")
+	wrappercmd=""
+
+	if [[ $no_winetricks && $no_protontricks ]]; then
+		echo -e "$no_winetricks\n$no_protontricks"
+		exit 1
+	fi
+	if [[ $no_winetricks ]]; then
+		echo "protontricks 107410"
+	else
+		echo "winetricks"
 	fi
 }
 
@@ -97,7 +120,7 @@ if [[ $PROTON_OFFICIAL_VERSION == "Proton Experimental" || $PROTON_OFFICIAL_VERS
 	PROTON_OFFICIAL_VERSION="- Experimental"
 	IS_EXPERIMENTAL=true
 elif [[ -z $PROTON_OFFICIAL_VERSION ]]; then
-	PROTON_OFFICIAL_VERSION="7.0"
+	PROTON_OFFICIAL_VERSION="8.0"
 fi
 
 # Executable paths
@@ -114,7 +137,7 @@ fi
 # Start
 if [[ -z $* ]]; then
 	# Check if TS is installed
-    _checkinstall "$TSPATH" "TeamSpeak"
+	_checkpath "$TSPATH" "TeamSpeak"
 	if ! pgrep -i arma3.exe && ! pgrep -i arma3_x64.exe ; then
 		echo -e "\e[31mArma should be started first!\e[0m \n"
 		exit 1
@@ -160,21 +183,23 @@ elif [[ $1 = "debug" ]]; then
 # Winetricks wrapper for Arma's compatdata
 elif [[ $1 = "winetricks" ]]; then
 	echo "Executing winetricks inside Arma's compatdata prefix..."
-	_checkinstall "/usr/bin/winetricks" "winetricks"
+	wrappercmd=$(_get_wrappercmd)
+	echo "Using \"$wrappercmd\""
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
 	if [[ $2 = "Arma" ]]; then
 		echo "Installing recommended features/DLLs for Arma"
-		winetricks d3dcompiler_43 d3dx10_43 d3dx11_43 xact_x64
+		$wrappercmd d3dcompiler_43 d3dx10_43 d3dx11_43 xact_x64
 		echo "done"
 	else
-		echo "Winetricks Arguments: ${*:2}"
-		winetricks "${*:2}"
+		echo "Arguments: ${*:2}"
+		$wrappercmd "${*:2}"
 	fi
 elif [[ $1 = "winecfg" ]]; then
 	echo "Starting winecfg via winetricks for Arma's compatdata..."
-	_checkinstall "/usr/bin/winetricks" "winetricks"
+	wrappercmd=$(_get_wrappercmd)
+	echo "Running $wrappercmd winecfg"
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
-	winetricks winecfg
+	$wrappercmd winecfg
 # Updater
 elif [[ $1 = "update" ]]; then
 	echo -e "\e[31mUpdating the script will reset your changes in the script options!\e[0m"
