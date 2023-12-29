@@ -61,7 +61,7 @@ fi
 ## FUNCTIONS
 # Installed check ($1 = path; $2 = name in error msg)
 _checkinstall() {
-	if [[ ! $(command -v $1) ]]; then
+	if [[ ! $(command -v "$1") ]]; then
 		echo -e "\e[31mError\e[0m: $1 is not installed!"
 		exit 1
 	fi
