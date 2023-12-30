@@ -14,7 +14,7 @@ _SCRIPTVER="1v18-6"
 
 ## MAKE SURE YOU CHOOSE THE SAME PROTON VERSION AS FOR ARMA IN STEAM!!!
 # Set this to the Proton Version you are using with Arma!
-# Available versions: "8.0 7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7", "Proton Experimental", "Experimental"
+# Available versions: "8.0", "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7", "Proton Experimental", "Experimental"
 # Defaults to: 8.0
 PROTON_OFFICIAL_VERSION=""
 
