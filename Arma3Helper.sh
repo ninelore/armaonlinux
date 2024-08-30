@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-# Licensed under GNU GPL 2.0 by Ingo "ninelore" Reitz <ninelore@protonmail.com>
+# SPDX-License-Identifier: GPL-2.0
 # 
+# Author: Ingo Reitz <9l@9lo.re>
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-# Version 1v18-6
-_SCRIPTVER="1v18-6"
+# Version 1v18-7
+_SCRIPTVER="1v18-7"
 
 #####################################################################################
 ## Adjust below or use the external config file
@@ -55,6 +56,7 @@ else
 fi
 if [[ -e "$USERCONFIG/config" ]]; then
 	echo "Config file $USERCONFIG/config found. Using its values."
+	# shellcheck source=/dev/null
 	source "$USERCONFIG/config"
 fi
 

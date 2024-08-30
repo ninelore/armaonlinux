@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-2.0
 
 #####################################################################################
 ## Arma3helper.sh CONFIG FILE (This will override settings made in Arma3Helper.sh) 
@@ -8,22 +9,22 @@
 # Set this to the Proton Version you are using with Arma!
 # Available versions: "8.0", "7.0", "6.3", "5.13", "5.0", "4.11", "4.2", "3.16", "3.7", "Proton Experimental", "Experimental"
 # Defaults to: 8.0
-PROTON_OFFICIAL_VERSION=""
+export PROTON_OFFICIAL_VERSION=""
 
 ## Path to Arma's compatdata (wineprefix)
 # Leave empty if Arma is installed in Steams default library
-COMPAT_DATA_PATH=""
+export COMPAT_DATA_PATH=""
 
 # If you have proton in a different steam library, then put the path to its steamapps folder here
 # Leave empty if Proton is installed in Steams default library
-STEAM_LIBRARY_PATH=""
+export STEAM_LIBRARY_PATH=""
 
 # If you are using a custom proton build, then put its folder name (from inside compatibilitytools.d) here
 # Leave empty if proton 
-PROTON_CUSTOM_VERSION=""
+export PROTON_CUSTOM_VERSION=""
 
 ## Esync/Fsync
 # IMPORTANT: Make sure that Esync and Fsync settings MATCH for both Arma and TeamSpeak(here)
 # If you havent explicitly turned it off for Arma, leave it on here!
-ESYNC=true
-FSYNC=true
+export ESYNC=true
+export FSYNC=true
