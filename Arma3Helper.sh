@@ -140,7 +140,7 @@ fi
 if [[ -z $* ]]; then
 	# Check if TS is installed
 	_checkpath "$TSPATH" "TeamSpeak"
-	if ! pgrep -i arma3.exe && ! pgrep -i arma3_x64.exe ; then
+	if ! pgrep -i arma3.exe && ! pgrep -i arma3_x64.exe && ! pgrep -i Arma3BattleEye.exe; then
 		echo -e "\e[31mArma should be started first!\e[0m \n"
 		exit 1
 	fi
