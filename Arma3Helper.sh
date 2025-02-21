@@ -6,7 +6,7 @@
 # Contributing:	famfo (famfo#0227)
 # Testing:		G4rrus#3755 
 # 
-_SCRIPTVER="1v18-8"
+_SCRIPTVER="1v18-9"
 
 #####################################################################################
 ## Adjust below or use the external config file
@@ -139,10 +139,7 @@ fi
 if [[ -z $* ]]; then
 	# Check if TS is installed
 	_checkpath "$TSPATH" "TeamSpeak"
-	if ! pgrep -i arma3.exe && ! pgrep -i arma3_x64.exe && ! pgrep -i Arma3BattleEye.exe; then
-		echo -e "\e[31mArma should be started first!\e[0m \n"
-		exit 1
-	fi
+	echo "Caution: Arma needs to be started first!"
 	sh -c "'$PROTONEXEC' run '$TSPATH'"
 # TS installer
 elif [[ $1 == "install" ]]; then 
