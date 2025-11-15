@@ -186,7 +186,7 @@ elif [[ $1 = "winetricks" ]]; then
 	export WINEPREFIX="$COMPAT_DATA_PATH/pfx"
 	if [[ $2 = "Arma" ]]; then
 		echo "Installing recommended features/DLLs for Arma"
-		$wrappercmd d3dcompiler_43 d3dx10_43 d3dx11_43 xact_x64
+		$wrappercmd d3dcompiler_43 d3dx10_43 d3dx11_43 xact_x64 xaudio29
 		echo "done"
 	else
 		echo "Arguments: ${*:2}"
