@@ -111,6 +111,26 @@ fi
 
 export STEAM_COMPAT_DATA_PATH="$COMPAT_DATA_PATH"
 export STEAM_COMPAT_CLIENT_INSTALL_PATH="$HOME/.steam/steam"
+# Proton builds with the gamedrive option enabled (e.g. Proton Hotfix) need these
+# two variables to resolve the game's Steam library during `proton run`. When they
+# are missing, Proton DELETES the S: drive mapping from the live prefix, and a
+# running Arma then fails server signature checks on every S:-pathed file
+# (random "not signed by a key accepted" / "Wrong signature for file" kicks
+# while TeamSpeak is open). The compatdata folder always lives in the same
+# Steam library as the game, so derive both from COMPAT_DATA_PATH — but only
+# export them when the derived library actually contains the game, so a
+# noncanonical COMPAT_DATA_PATH can never point Proton at a wrong library.
+if [[ -z "$STEAM_COMPAT_INSTALL_PATH" && -z "$STEAM_COMPAT_LIBRARY_PATHS" ]]; then
+	_ARMA_LIBRARY="$(readlink -f "$COMPAT_DATA_PATH" 2>/dev/null)"
+	_ARMA_LIBRARY="${_ARMA_LIBRARY%/compatdata/*}"
+	if [[ -d "$_ARMA_LIBRARY/common/Arma 3" ]]; then
+		export STEAM_COMPAT_INSTALL_PATH="$_ARMA_LIBRARY/common/Arma 3"
+		export STEAM_COMPAT_LIBRARY_PATHS="$_ARMA_LIBRARY"
+	else
+		echo -e "\e[33mWarning\e[0m: Could not locate Arma's Steam library from COMPAT_DATA_PATH."
+		echo "Without STEAM_COMPAT_INSTALL_PATH and STEAM_COMPAT_LIBRARY_PATHS, newer Proton versions remove the prefix's S: drive, which breaks server signature checks. Export both in your config file."
+	fi
+fi
 export SteamAppId="107410"
 export SteamGameId="107410"
 if [[ "$ESYNC" == "false" ]]; then
